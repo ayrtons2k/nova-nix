@@ -14,7 +14,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      #./home-manager/home.nix
     ];
 
   # Bootloader.
@@ -125,11 +124,8 @@
     description = "ayrton";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
-      git
-      sublime
-      alacritty
-      starship
+      # kdePackages.kate
+      # git
     ];
   };
 
