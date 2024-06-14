@@ -56,7 +56,7 @@
   services.desktopManager.plasma6.enable = true;
 
   # Enable open ssh
-  services.openssh.enable = true;
+  services.ope nssh.enable = true;
 
 
 
@@ -124,8 +124,8 @@
     description = "ayrton";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      # kdePackages.kate
-      # git
+      kdePackages.kate
+      git
     ];
   };
 
