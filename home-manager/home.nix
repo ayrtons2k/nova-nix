@@ -14,7 +14,8 @@ let
       };
     };
   };
-in
+
+  services.desktopManager.plasma6.enable = true;
   {
     imports =
     [ # Include the results of the hardware scan.

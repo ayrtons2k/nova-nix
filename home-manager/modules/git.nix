@@ -5,8 +5,8 @@
   ...
 }: {programs.git = {
     enable = true;
-    userName = "My Name";
-    userEmail = "me@example.com";
+    userName = "ayrton";
+    userEmail = "ayrton.mercado@gmail.com";
     includes = [
         { path = "~/.gitconfig.local"; }
     ];

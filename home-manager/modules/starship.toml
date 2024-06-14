@@ -78,13 +78,23 @@ $character"""
 
 right_format = """
 $git_branch\
-$git_commit\
-$git_state\
-$git_metrics\
-[ ](fg:#769ff0 bg:#394260)
 $git_status\
-$hg_branch\
+$git_commit\
 """
+
+
+
+# right_format = """
+# $git_branch\
+# $git_commit\
+# $git_state\
+# $git_metrics\
+# [ ](fg:#769ff0 bg:#394260)
+# $git_status\
+# $hg_branch\
+# """
+
+
 
 
 # right_format = """
@@ -172,16 +182,16 @@ style = "bold italic bright-blue"
 
 [git_status]
 style = "italic bright-blue"
-format = """([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"""
+format = """([⎪$ahead_behind $staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"""
 conflicted = "[◪◦](italic bright-magenta)"
 ahead = "[▲│[${count}](bold white)│](italic green)"
 behind = "[▽│[${count}](bold white)│](italic red)"
 diverged = "[◇ ▲┤[${ahead_count}](regular white)│▽┤[${behind_count}](regular white)│](italic bright-magenta)"
-untracked = "[◌◦](italic bright-yellow)"
-stashed = "[◦◫◦](italic white)"
-modified = "[●◦](italic yellow)"
+untracked = "[◌](italic bright-yellow)"
+stashed = "[◫](italic white)"
+modified = "[●](italic yellow)"
 staged = "[■┤[$count](bold white)│](italic bright-cyan)"
-renamed = "[◎◦](italic bright-blue)"
+renamed = "[◎](italic bright-blue)"
 deleted = "[✕](italic red)"
 
 [deno]
