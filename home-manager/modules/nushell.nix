@@ -35,15 +35,12 @@
             pbpaste="cv";
             hms="home-manager switch --flake . --impure";
             nrs="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix";
+            nrsu="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix --upgrade";
         };
         extraConfig = ''
           clear
-
           zoxide init nushell | save -f ~/.zoxide.nu 
      
-          ssh-add ~/.ssh/id_ed25519
-
-        
            let carapace_completer = {|spans|
            carapace $spans.0 nushell $spans | from json
            }
@@ -68,6 +65,8 @@
            prepend /home/myuser/.apps |
            append /usr/bin/env
            )
+           ssh-add ~/.ssh/id_ed25519
+
          '';     
     };
 
