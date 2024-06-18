@@ -19,6 +19,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  
 
   networking.hostName = "nova-nix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -56,9 +58,20 @@
   services.desktopManager.plasma6.enable = true;
 
   # Enable open ssh
-  services.ope nssh.enable = true;
+  services.openssh = { 
+    enable = true;
+  };
+    programs.ssh = { 
+    startAgent = true;
+  };
 
-
+  # # Add ssh-agent service configuration
+  #   services = {
+  #     ssh-agent = {
+  #       enable = true;
+  #       enableSSHAgent = true;
+  #     };
+  #   };
 
   # Configure keymap in X11
   services.xserver = {
@@ -129,6 +142,7 @@
     ];
   };
 
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -148,8 +162,12 @@
 
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
+    config = {
+      allowUnfree = true;
+      config = {
+         allowUnfreePredicate = (_: true);
+      };
+    };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

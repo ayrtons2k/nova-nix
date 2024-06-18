@@ -16,13 +16,14 @@ let
   };
   in
   {
+    
+
     imports =
     [ # Include the results of the hardware scan.
       ./modules/codium.nix
       ./modules/nushell.nix
       ./modules/git.nix
       ./modules/zellij.nix
-      ./modules/neofetch.nix
     ];
     programs.home-manager.enable = true;
 
@@ -31,7 +32,6 @@ let
     home.stateVersion = "24.05"; # This version should match your NixOS version
     home.packages = with pkgs; [
       bat                  # A cat clone with syntax highlighting and Git integration
-      #eza                  # Modern replacement for ls
       fzf                  # Command-line fuzzy finder
       ripgrep              # Line-oriented search tool
       gitAndTools.git-lfs  # Git extension for versioning large files
@@ -40,14 +40,12 @@ let
       jq                   # Command-line JSON processor
       fd                   # Simple, fast, and user-friendly alternative to 'find'
       kdeconnect           # Connect smartphones to your KDE desktop
-      #zoxide               # Smarter cd command
       tmux                 # Terminal multiplexer
       lazygit              # Simple terminal UI for git commands
       lazydocker           # Simple terminal UI for docker commands
       nerdfonts            # Patched fonts with a high number of glyphs/icons
       ksshaskpass          # SSH password prompt for KDE
-      #starship             # The minimal, blazing-fast, and infinitely customizable prompt for any shell
-      # neofetch             # CLI system information tool
+      neofetch             # CLI system information tool
       alacritty            # A fast, cross-platform, OpenGL terminal emulator
       navi                 # Interactive cheatsheet tool
       v4l-utils            # Video4Linux utilities
@@ -59,7 +57,8 @@ let
       signal-desktop       # Private messaging app
       bash                 # GNU Bourne Again Shell
       zsh                  # Z shell
-  #    nvtopPackages.full   # A (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
+      slack                # Team communication tool
+      nvtopPackages.full   # A (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
       xclip
   #    ollama
   #    cudatoolkit

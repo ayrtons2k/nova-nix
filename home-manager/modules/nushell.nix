@@ -40,6 +40,8 @@
         extraConfig = ''
           clear
           zoxide init nushell | save -f ~/.zoxide.nu 
+          
+          $env.NIXPKGS_ALLOW_UNFREE = 1
      
            let carapace_completer = {|spans|
            carapace $spans.0 nushell $spans | from json
@@ -69,7 +71,6 @@
 
          '';     
     };
-
     starship = {
       enable = true;
       settings = pkgs.lib.importTOML "/home/ayrton/.config/nixos/home-manager/modules/starship.toml";
@@ -79,3 +80,4 @@
     };
   };
 }
+  
