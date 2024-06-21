@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 #sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix
 
 
@@ -15,8 +11,9 @@
     allowUnfree = true;
     config = {
       allowUnfreePredicate = (_: true);
+    };
   };
-};
+
   #nixpkgs.config.allowUnfree = true;
 
   imports =
