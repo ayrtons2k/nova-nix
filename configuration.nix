@@ -10,6 +10,14 @@
 {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+ 
+  nixpkgs.config = {
+    allowUnfree = true;
+    config = {
+      allowUnfreePredicate = (_: true);
+  };
+};
+  #nixpkgs.config.allowUnfree = true;
 
   imports =
     [ # Include the results of the hardware scan.
@@ -160,20 +168,13 @@
     };
   };
 
-
-  # Allow unfree packages
-    config = {
-      allowUnfree = true;
-      config = {
-         allowUnfreePredicate = (_: true);
-      };
-    };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
     git
+    lnav
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
