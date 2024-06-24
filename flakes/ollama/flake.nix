@@ -8,24 +8,26 @@
     services-flake.url = "github:juspay/services-flake";
   };
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-    
     systems = import inputs.systems;
-    imports = [ inputs.process-compose-flake.flakeModule ];
-     
-     perSystem = { self', pkgs, system,  lib, ... }: { 
+    imports = [
+      inputs.process-compose-flake.flakeModule
+    ];
+    perSystem = { self', pkgs, system, lib, ... }: {
       packages.default = self'.packages.services-flake-llm;
-      process-compose."services-flake-llm" = pc: {
-        imports = [ 
-          inputs.services-flake.processComposeModules.default 
-          "${inputs.nixpkgs}/nixos/modules/misc/nixpkgs.nix"
-        ];
-        
-        nixpkgs = {
-          hostPlatform = system;
-          # Required for CUDA
-          config.allowUnfree = true;
-        };
 
+      imports = [
+        "${inputs.nixpkgs}/nixos/modules/misc/nixpkgs.nix"
+      ];
+      nixpkgs = {
+        hostPlatform = system;
+        # Required for CUDA
+        config.allowUnfree = true;
+      };
+
+      process-compose."services-flake-llm" = pc: {
+        imports = [
+          inputs.services-flake.processComposeModules.default
+        ];
         services = let dataDirBase = "$HOME/.services-flake/llm"; in {
           # Backend service to perform inference on LLM models
           ollama."ollama1" = {
