@@ -14,10 +14,9 @@
      
      perSystem = { self', pkgs, system,  lib, ... }: { 
       packages.default = self'.packages.services-flake-llm;
-      packages.config.allowUnfree = true;
       process-compose."services-flake-llm" = pc: {
         imports = [ 
-          #inputs.services-flake.processComposeModules.default 
+          inputs.services-flake.processComposeModules.default 
           "${inputs.nixpkgs}/nixos/modules/misc/nixpkgs.nix"
         ];
         
