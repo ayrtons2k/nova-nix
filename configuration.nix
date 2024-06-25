@@ -5,6 +5,18 @@
 
 {
 
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/7ce1d4bd-8ee3-4c9f-a7e1-4fe79e53b256";
+    fsType = "btrfs";
+    options = ["defaults"];
+  };
+
+  fileSystems."/home/ayrton/.services-flake/llm" = {
+    device = "/data/services-flake/llm";
+    fsType = "none";
+    options = ["bind"];
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
  
   nixpkgs.config = {
