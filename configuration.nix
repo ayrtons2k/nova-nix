@@ -74,13 +74,19 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  # Enable open ssh
+  # Enable open ssh 
+  # https://github.com/Mic92/nix-ld?tab=readme-ov-file
+  # https://blog.thalheim.io/2022/12/31/nix-ld-a-clean-solution-for-issues-with-pre-compiled-executables-on-nixos/
+
   services.openssh = { 
     enable = true;
   };
     programs.ssh = { 
     startAgent = true;
   };
+
+  # Enable nix-ld 
+   programs.nix-ld.enable = true;
 
   # # Add ssh-agent service configuration
   #   services = {

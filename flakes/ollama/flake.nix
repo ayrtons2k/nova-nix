@@ -1,3 +1,4 @@
+# //http://127.0.0.1:1111/workspace/models/
 {
   description = "A collection of services enabling the users to perform inference on LLM models";
   inputs = {
@@ -46,7 +47,7 @@
             # models manually in the UI.
             #
             # Search for the models here: https://ollama.com/library
-            models = [ "deepseek-coder-v2" ];
+            models = [ "deepseek-coder-v2" "llama3" "gemma:7b" "codellama:34b" "dolphin-mistral"];
           };
 
           # Get ChatGPT like UI, but open-source, with Open WebUI
