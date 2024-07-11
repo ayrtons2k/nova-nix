@@ -68,6 +68,8 @@ in {
     nvtopPackages.full   # A (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
     xclip
     ctranslate2
+     protonvpn-gui
+     opera
     # cudatoolkit
     # customPkgs.lmstudio
   ] ++ (with unstable; [
