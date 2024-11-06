@@ -4,11 +4,9 @@
 #init zoxide init nushell | save -f ~/.zoxide.nu
 { config, pkgs, ... }:
 {
-    programs = {
-        neofetch = {
+    programs.neofetch = {
             enable = true;
         };
-    };
 
 }
 

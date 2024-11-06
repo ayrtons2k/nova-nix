@@ -37,6 +37,17 @@ in {
   home.homeDirectory = "/home/ayrton";
   home.stateVersion = "24.05"; # This version should match your NixOS version
 
+  # fonts.fonts = with pkgs; [
+  #   noto-fonts
+  #   #dejavu-fonts
+  #   google-fonts
+  #   open-fonts
+  #   input-fonts
+  #   kreative-square-fonts    # https://www.kreativekorp.com/software/fonts/ksquare/
+  #   typodermic-free-fonts             #https://typodermicfonts.com/
+  #   # Add any other font packages you'd like
+  # ];
+
   home.packages = with pkgs; [
     bat                  # A cat clone with syntax highlighting and Git integration
     fzf                  # Command-line fuzzy finder
@@ -51,6 +62,16 @@ in {
     lazygit              # Simple terminal UI for git commands
     lazydocker           # Simple terminal UI for docker commands
     nerdfonts            # Patched fonts with a high number of glyphs/icons
+
+    noto-fonts
+    #dejavu-fonts
+    google-fonts
+    open-fonts
+    #input-fonts
+    kreative-square-fonts    # https://www.kreativekorp.com/software/fonts/ksquare/
+    typodermic-free-fonts   
+
+
     ksshaskpass          # SSH password prompt for KDE
     neofetch             # CLI system information tool
     alacritty            # A fast, cross-platform, OpenGL terminal emulator
@@ -68,8 +89,10 @@ in {
     nvtopPackages.full   # A (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
     xclip
     ctranslate2
-     protonvpn-gui
-     opera
+    protonvpn-gui
+    opera
+    libimobiledevice
+    ifuse
     # cudatoolkit
     # customPkgs.lmstudio
   ] ++ (with unstable; [
