@@ -69,7 +69,7 @@ in {
     open-fonts
     #input-fonts
     kreative-square-fonts    # https://www.kreativekorp.com/software/fonts/ksquare/
-    typodermic-free-fonts   
+    #typodermic-free-fonts   
 
 
     ksshaskpass          # SSH password prompt for KDE
