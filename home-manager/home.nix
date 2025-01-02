@@ -35,7 +35,7 @@ in {
 
   home.username = "ayrton";
   home.homeDirectory = "/home/ayrton";
-  home.stateVersion = "24.05"; # This version should match your NixOS version
+  home.stateVersion = "24.11"; # This version should match your NixOS version
 
   # fonts.fonts = with pkgs; [
   #   noto-fonts
@@ -57,7 +57,7 @@ in {
     htop                 # Interactive process viewer
     jq                   # Command-line JSON processor
     fd                   # Simple, fast, and user-friendly alternative to 'find'
-    kdeconnect           # Connect smartphones to your KDE desktop
+   plasma5Packages.kdeconnect-kde       # Connect smartphones to your KDE desktop
     tmux                 # Terminal multiplexer
     lazygit              # Simple terminal UI for git commands
     lazydocker           # Simple terminal UI for docker commands
@@ -65,7 +65,6 @@ in {
 
     noto-fonts
     #dejavu-fonts
-    google-fonts
     open-fonts
     #input-fonts
     kreative-square-fonts    # https://www.kreativekorp.com/software/fonts/ksquare/

@@ -108,6 +108,9 @@
     # desktopManager.gnome.enable = true;    
   };
 
+  hardware.nvidia.open = true;
+
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -144,7 +147,6 @@
   # GPU support
   hardware.opengl = {
     enable = true;
-    driSupport = true;
     driSupport32Bit = true;
     extraPackages = with pkgs; [
       linuxPackages.nvidia_x11
@@ -282,6 +284,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
 }
