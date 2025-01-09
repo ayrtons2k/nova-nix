@@ -1,5 +1,5 @@
 #ln ~/.config/nixos/home-manager/alacritty.toml alacritty.toml
-[shell]
+[ttttt.shell]
 program = "zellij"
 
 [cursor]

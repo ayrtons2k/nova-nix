@@ -36,6 +36,11 @@
             hms="home-manager switch --flake . --impure";
             nrs="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix";
             nrsu="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix --upgrade";
+            nsp="nix-shell -p ";
+            nspi="nix-shell -p inkscape";
+            nspc="nix-shell -p google-chrome";
+            aliases="scope aliases";
+
         };
         extraConfig = ''
           clear
