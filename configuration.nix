@@ -38,7 +38,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_1;
   
 
   networking.hostName = "nova-nix"; # Define your hostname.
@@ -108,11 +109,30 @@
     # desktopManager.gnome.enable = true;    
   };
 
-  hardware.nvidia.open = true;
+  # hardware.nvidia.open = true;
+  hardware.nvidia = {
+  modesetting.enable = true;
+  open = false;  # Use proprietary drivers
+  nvidiaSettings = true;
+  package = config.boot.kernelPackages.nvidiaPackages.stable;
+};
 
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+systemd.user.services."app-protonvpn-app@autostart" = {
+  enable = true;
+  description = "Proton VPN";
+  serviceConfig = {
+    Type = "oneshot";
+    RemainAfterExit = true;
+    ExecStart = "${pkgs.coreutils}/bin/true";
+  };
+  wantedBy = ["default.target"];
+};
+
+
 
   # Enable bluetooth
   hardware.bluetooth = {
