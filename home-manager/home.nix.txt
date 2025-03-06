@@ -61,7 +61,6 @@ in {
     tmux                 # Terminal multiplexer
     lazygit              # Simple terminal UI for git commands
     lazydocker           # Simple terminal UI for docker commands
-    nerd-fonts.jetbrains-mono
    /*  nerd-fonts.agave
     nerd-fonts.anonymice
     nerd-fonts.arimo
@@ -99,7 +98,7 @@ in {
     nerd-fonts.iosevka
     nerd-fonts.iosevka-term
     nerd-fonts.iosevka-term-slab */
-    jetbrains-mono
+    nerd-fonts.jetbrains-mono
     /* nerd-fonts.lekton
     nerd-fonts.liberation
     nerd-fonts.lilex

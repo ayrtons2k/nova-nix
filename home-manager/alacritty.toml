@@ -1,5 +1,5 @@
 #ln ~/.config/nixos/home-manager/alacritty.toml alacritty.toml
-[ttttt.shell]
+[terminal.shell]
 program = "zellij"
 
 [cursor]
@@ -9,7 +9,7 @@ style = "Beam"
 size = 11.0
 
 [font.normal]
-family = "RobotoMono Nerd Font"
+family = "JetBrains Mono NL"
 
 [window]
 startup_mode = "Windowed"

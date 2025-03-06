@@ -159,7 +159,7 @@
       libdrm
       libglvnd
       libnotify
-      #libpulseaudiofontconfig
+      libpulseaudio
       libunwind
       libusb1
       libuuid
@@ -194,8 +194,8 @@
 
   # Font configuration
   fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
+    enableDefaultFonts = true;
+    fonts = with pkgs; [
       noto-fonts
       dejavu_fonts
       font-awesome
