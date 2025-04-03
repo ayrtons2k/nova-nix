@@ -17,13 +17,7 @@ let
   };
 in {
 
-  #this doesn't work
-  # services.ollama.enable = true;
-  # services.open-webui = {
-  #   enable = true;
-  #   environment.OLLAMA_API_BASE_URL = "http://localhost:11434";
-  # };
-
+  
   imports = [
     ./modules/codium.nix
     ./modules/nushell.nix

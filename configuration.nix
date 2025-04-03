@@ -29,7 +29,7 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   networking.hostName = "nova-nix";
@@ -60,9 +60,14 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
     open = false;  # Use proprietary drivers
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #package = config.boot.kernelPackages.nvidiaPackages.latest;
+    #package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # Enable KDE Plasma
@@ -109,6 +114,14 @@
       gperf
     ];
   };
+
+  #ollama
+  services.ollama.enable = true;
+   services.open-webui = {
+     enable = true;
+     environment.OLLAMA_API_BASE_URL = "http://localhost:11434";
+   };
+
 
   # User configuration
   users.users.ayrton = {
