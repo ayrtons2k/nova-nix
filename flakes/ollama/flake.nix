@@ -20,7 +20,7 @@
         "${inputs.nixpkgs}/nixos/modules/misc/nixpkgs.nix"
       ];
       nixpkgs = {
-        hostPlatform = system;
+        hostPlatform = system; 
         # Required for CUDA
         config.allowUnfree = true;
       };

@@ -135,7 +135,11 @@
   };
 
   # Firefox and Git
-  programs.firefox.enable = true;
+  programs.firefox = {
+  enable = true;
+  package = pkgs.firefox;
+  nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
+};
   programs.git.config = {
     init.defaultBranch = "main";
     url."https://github.com/".insteadOf = [ "gh:" "github:" ];
@@ -144,7 +148,7 @@
   # System packages
   environment.systemPackages = with pkgs; [
     git
-    lnav
+    lnav 
   ];
 
   # Nix-LD for compatibility
@@ -210,6 +214,7 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
+      nerdfonts
       dejavu_fonts
       font-awesome
       liberation_ttf

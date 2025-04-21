@@ -15,11 +15,15 @@ let
       allowUnfreePredicate = (_: true);
     };
   };
+
+  cursorFlakePkg = import "/home/ayrton/.config/nixos/home-manager/flakes/cursor/flake.nix";
+
 in {
 
   
   imports = [
     ./modules/codium.nix
+    ./modules/vscode.nix
     ./modules/nushell.nix
     ./modules/git.nix
     ./modules/zellij.nix
@@ -55,84 +59,12 @@ in {
     tmux                 # Terminal multiplexer
     lazygit              # Simple terminal UI for git commands
     lazydocker           # Simple terminal UI for docker commands
-    nerd-fonts.jetbrains-mono
-   /*  nerd-fonts.agave
-    nerd-fonts.anonymice
-    nerd-fonts.arimo
-    nerd-fonts.aurulent-sans-mono
-    nerd-fonts.bigblue-terminal
-    nerd-fonts.bitstream-vera-sans-mono
-    nerd-fonts.blex-mono
-    nerd-fonts.caskaydia-cove
-    nerd-fonts.caskaydia-mono
-    nerd-fonts.code-new-roman
-    nerd-fonts.comic-shanns-mono
-    nerd-fonts.commit-mono
-    nerd-fonts.cousine
-    nerd-fonts.d2coding
-    nerd-fonts.daddy-time-mono
-    nerd-fonts.dejavu-sans-mono
-    nerd-fonts.departure-mono
-    nerd-fonts.droid-sans-mono
-    nerd-fonts.envy-code-r
-    nerd-fonts.fantasque-sans-mono
-    nerd-fonts.fira-code
-    nerd-fonts.fira-mono
-    nerd-fonts.geist-mono
-    nerd-fonts.go-mono
-    nerd-fonts.gohufont
-    nerd-fonts.hack
-    nerd-fonts.hasklug
-    nerd-fonts.heavy-data
-    nerd-fonts.hurmit
-    nerd-fonts.im-writing
-    nerd-fonts.inconsolata
-    nerd-fonts.inconsolata-go
-    nerd-fonts.inconsolata-lgc
-    nerd-fonts.intone-mono
-    nerd-fonts.iosevka
-    nerd-fonts.iosevka-term
-    nerd-fonts.iosevka-term-slab */
+
     jetbrains-mono
-    /* nerd-fonts.lekton
-    nerd-fonts.liberation
-    nerd-fonts.lilex
-    nerd-fonts.martian-mono
-    nerd-fonts.meslo-lg
-    nerd-fonts.monaspace
-    nerd-fonts.monofur
-    nerd-fonts.monoid
-    nerd-fonts.mononoki
-    nerd-fonts.mplus
-    nerd-fonts.noto
-    nerd-fonts.open-dyslexic
-    nerd-fonts.overpass
-    nerd-fonts.profont
-    nerd-fonts.proggy-clean-tt
-    nerd-fonts.recursive-mono
-    nerd-fonts.roboto-mono
-    nerd-fonts.sauce-code-pro
-    nerd-fonts.shure-tech-mono
-    nerd-fonts.space-mono
-    nerd-fonts.symbols-only
-    nerd-fonts.terminess-ttf
-    nerd-fonts.tinos
-    nerd-fonts.ubuntu
-    nerd-fonts.ubuntu-mono
-    nerd-fonts.ubuntu-sans
-    nerd-fonts.victor-mono
-    nerd-fonts.zed-mono
-    noto-fonts
-    #dejavu-fonts
-    open-fonts
-    #input-fonts
-    kreative-square-fonts    # https://www.kreativekorp.com/software/fonts/ksquare/
-    #typodermic-free-fonts  */ 
-   
-
-
+    nerdfonts
     ksshaskpass          # SSH password prompt for KDE
     neofetch             # CLI system information tool
+    fastfetch
     alacritty            # A fast, cross-platform, OpenGL terminal emulator
     navi                 # Interactive cheatsheet tool
     v4l-utils            # Video4Linux utilities
@@ -159,19 +91,16 @@ in {
     # unstable.somePackage
   ]);
 
+  
   programs = {
     carapace = {
       enable = true;
       # carapace.enableNushellIntegration = true;     # not working
     };
   
-
     #nerd-fonts_0xproto
     #nerd-fonts_3270
   
- 
-
-
     git = {
       enable = true; 
       userName = "ayrton";
