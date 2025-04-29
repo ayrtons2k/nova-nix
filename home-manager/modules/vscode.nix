@@ -4,32 +4,64 @@
   pkgs,
   ...
 }: {
-
   home.packages = with pkgs; [
-    dotnet-sdk_9# Installs .NET 9.0 SDK
+    dotnet-sdk_9 # Installs .NET 9.0 SDK
   ];
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode;
 
-   
     extensions = with pkgs.vscode-extensions;
       [
-        eamodio.gitlens
-        yzhang.markdown-all-in-one
+        adpyke.codesnap
+        azsdktm.securityintellisense
         bbenoist.nix
         catppuccin.catppuccin-vsc-icons
+        dracula-theme.theme-dracula
+        eamodio.gitlens
+        edwinsulaiman.jetbrains-rider-dark-theme
+        enkia.tokyo-night
+        esbenp.prettier-vscode
+        eserozvataf.one-dark-pro-monokai-darker
+        faceair.ayu-one-dark
+        github.github-vscode-theme
+        hbenl.vscode-test-explorer
+        hediet.vscode-drawio
+        hilalh.hyper-dracula-vscode-theme
+        ionide.ionide-fsharp
+        jmrog.vscode-nuget-package-manager
+        kamadorueda.alejandra
+        ms-dotnettools.blazorwasm-companion
+        ms-dotnettools.csdevkit
+        ms-dotnettools.csharp
+        ms-dotnettools.dotnet-interactive-vscode
+        ms-dotnettools.vscode-dotnet-pack
+        ms-dotnettools.vscode-dotnet-runtime
+        ms-dotnettools.vscodeintellicode-csharp
+        ms-toolsai.jupyter
+        ms-toolsai.jupyter-keymap
+        ms-toolsai.jupyter-renderers
+        ms-toolsai.vscode-jupyter-cell-tags
+        ms-toolsai.vscode-jupyter-slideshow
+        ms-vscode-remote.remote-ssh-edit
+        ms-vscode.test-adapter-converter
+        patcx.vscode-nuget-gallery
         redhat.java
+        redhat.vscode-xml
+        sallar.vscode-duotone-dark
+        sandrorybarik.omnipotent
+        saoudrizwan.claude-dev
+        streetsidesoftware.code-spell-checker
+        subframe7536.theme-maple
         tamasfe.even-better-toml
         thenuprojectcontributors.vscode-nushell-lang
+        thomaz.preparing
+        timheuer.resx-editor
+        tion.evenbettercomments
+        uloco.theme-bluloco-dark
+        wart.ariake-dark
         yzhang.markdown-all-in-one
-        hediet.vscode-drawio
-        adpyke.codesnap
-        streetsidesoftware.code-spell-checker
-        esbenp.prettier-vscode
-        kamadorueda.alejandra
-
+        zhuangtongfa.material-theme
         # bbenoist.Nix
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
@@ -63,32 +95,9 @@
         # ms-azuretools.vscode-docker
       ];
   };
-
-  # home.packages = with pkgs; [
-  #   (vscode-with-extensions.override {
-  #   vscode = vscodium;
-  #   vscodeExtensions = with vscode-extensions; [
-  #     GrapeCity.gc-excelviewer
-  #     vsls-contrib.codetour
-  #     RandomFractalsInc.vscode-data-preview
-  #     wayou.vscode-todo-highlight
-  #     PKief.material-icon-theme
-  #     hediet.vscode-drawio
-  #     adpyke.codesnap
-  #     streetsidesoftware.code-spell-checker
-  #     esbenp.prettier-vscode
-  #     mangeshrex.Everblush
-  #     alexravenna.monokai-dimmed-vibrant
-  #     TabNine.tabnine-vscode
-  #     bbenoist.nix
-  #     ms-python.python
-  #     ms-azuretools.vscode-docker
-  #    ]
-  # })           # open source vs code clone w/o telemetry
-  # ];
 }
-
-/* settings
+/*
+   settings
 {
     "terminal.integrated.profiles.linux": {
         "Nushell": {
@@ -111,4 +120,6 @@
     "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.cursorStyle": "underline",
     "terminal.integrated.defaultProfile.linux": "Nushell"
-}*/
+}
+*/
+

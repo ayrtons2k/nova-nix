@@ -22,7 +22,7 @@ in {
 
   
   imports = [
-    ./modules/codium.nix
+    #./modules/codium.nix
     ./modules/vscode.nix
     ./modules/nushell.nix
     ./modules/git.nix
@@ -83,6 +83,7 @@ in {
     opera
     libimobiledevice
     ifuse
+    vscode
     # cudatoolkit
     # customPkgs.lmstudio
   ] ++ (with unstable; [
