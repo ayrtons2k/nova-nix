@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 {
     programs = {
+        zoxide.enableNushellIntegration = true;
         nushell = {
         enable = true;
 
@@ -44,7 +45,8 @@
         };
         extraConfig = ''
           clear
-          zoxide init nushell | save -f ~/.zoxide.nu 
+          hide-env __zoxide_hooked 
+          #zoxide init nushell | save -f ~/.zoxide.nu 
           
           $env.NIXPKGS_ALLOW_UNFREE = 1
      
