@@ -13,55 +13,6 @@
 
     extensions = with pkgs.vscode-extensions;
       [
-        adpyke.codesnap
-        azsdktm.securityintellisense
-        bbenoist.nix
-        catppuccin.catppuccin-vsc-icons
-        dracula-theme.theme-dracula
-        eamodio.gitlens
-        edwinsulaiman.jetbrains-rider-dark-theme
-        enkia.tokyo-night
-        esbenp.prettier-vscode
-        eserozvataf.one-dark-pro-monokai-darker
-        faceair.ayu-one-dark
-        github.github-vscode-theme
-        hbenl.vscode-test-explorer
-        hediet.vscode-drawio
-        hilalh.hyper-dracula-vscode-theme
-        ionide.ionide-fsharp
-        jmrog.vscode-nuget-package-manager
-        kamadorueda.alejandra
-        ms-dotnettools.blazorwasm-companion
-        ms-dotnettools.csdevkit
-        ms-dotnettools.csharp
-        ms-dotnettools.dotnet-interactive-vscode
-        ms-dotnettools.vscode-dotnet-pack
-        ms-dotnettools.vscode-dotnet-runtime
-        ms-dotnettools.vscodeintellicode-csharp
-        ms-toolsai.jupyter
-        ms-toolsai.jupyter-keymap
-        ms-toolsai.jupyter-renderers
-        ms-toolsai.vscode-jupyter-cell-tags
-        ms-toolsai.vscode-jupyter-slideshow
-        ms-vscode-remote.remote-ssh-edit
-        ms-vscode.test-adapter-converter
-        patcx.vscode-nuget-gallery
-        redhat.java
-        redhat.vscode-xml
-        sallar.vscode-duotone-dark
-        sandrorybarik.omnipotent
-        saoudrizwan.claude-dev
-        streetsidesoftware.code-spell-checker
-        subframe7536.theme-maple
-        tamasfe.even-better-toml
-        thenuprojectcontributors.vscode-nushell-lang
-        thomaz.preparing
-        timheuer.resx-editor
-        tion.evenbettercomments
-        uloco.theme-bluloco-dark
-        wart.ariake-dark
-        yzhang.markdown-all-in-one
-        zhuangtongfa.material-theme
         # bbenoist.Nix
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [

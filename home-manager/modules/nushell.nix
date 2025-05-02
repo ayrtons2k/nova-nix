@@ -72,13 +72,19 @@
            prepend /home/myuser/.apps |
            append /usr/bin/env
            )
-           ssh-add ~/.ssh/id_ed25519
 
+           
+           ssh-add -l | find ~/.ssh/id_ed25519 | ignore 
+          if $env.LAST_EXIT_CODE != 0 {
+              # If the previous command failed (exit code != 0), the key was not found.
+              print "Attempting to add SSH key to agent..." # Optional feedback
+              ssh-add ~/.ssh/id_ed25519 | ignore
+          }
          '';     
     };
     starship = {
       enable = true;
-      settings = pkgs.lib.importTOML "/home/ayrton/.config/nixos/home-manager/modules/starship.toml";
+      settings = pkgs.lib.importTOML "/home/ayrton/nova-nix-config/home-manager/modules/starship.toml";
       enableBashIntegration = true;
       enableFishIntegration = true;
       enableZshIntegration = true;

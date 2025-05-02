@@ -1,4 +1,3 @@
-
 { config, pkgs, ... }:
 
 let
@@ -16,11 +15,12 @@ let
     };
   };
 
-  cursorFlakePkg = import "/home/ayrton/.config/nixos/home-manager/flakes/cursor/flake.nix";
+  cursorFlakePkg = import "~/nova-nix-config/home-manager/flakes/cursor/flake.nix";
 
 in {
 
-  
+   # programs.ssh.enable = false; # Keep this commented/false if using gpg-agent for SSH
+
   imports = [
     #./modules/codium.nix
     ./modules/vscode.nix
@@ -31,94 +31,118 @@ in {
 
   programs.home-manager.enable = true;
 
-  home.username = "ayrton";
-  home.homeDirectory = "/home/ayrton";
-  home.stateVersion = "24.11"; # This version should match your NixOS version
+  # --- Top-Level Home Block ---
+  home = {
+    username = "ayrton";
+    homeDirectory = "/home/ayrton";
+    stateVersion = "24.11"; # This version should match your NixOS version
 
-  # fonts.fonts = with pkgs; [
-  #   noto-fonts
-  #   #dejavu-fonts
-  #   google-fonts
-  #   open-fonts
-  #   input-fonts
-  #   kreative-square-fonts    # https://www.kreativekorp.com/software/fonts/ksquare/
-  #   typodermic-free-fonts             #https://typodermicfonts.com/
-  #   # Add any other font packages you'd like
-  # ];
+    packages = with pkgs; [
+      pkgs.gnupg # For gpg-agent
+      pkgs.pinentry-tty # For gpg-agent
+      alacritty            # Ensure alacritty is in packages
+      bat                  # A cat clone with syntax highlighting and Git integration
+      fzf                  # Command-line fuzzy finder
+      ripgrep              # Line-oriented search tool
+      gitAndTools.git-lfs  # Git extension for versioning large files
+      gitAndTools.gh       # GitHub CLI
+      htop                 # Interactive process viewer
+      jq                   # Command-line JSON processor
+      fd                   # Simple, fast, and user-friendly alternative to 'find'
+      plasma5Packages.kdeconnect-kde       # Connect smartphones to your KDE desktop
+      tmux                 # Terminal multiplexer
+      lazygit              # Simple terminal UI for git commands
+      lazydocker           # Simple terminal UI for docker commands
+      jetbrains-mono
+      nerdfonts
+      ksshaskpass          # SSH password prompt for KDE (keep if maybe used later)
+      neofetch             # CLI system information tool
+      fastfetch
+      navi                 # Interactive cheatsheet tool
+      v4l-utils            # Video4Linux utilities
+      mpv                  # Media player for testing cameras
+      usbutils             # For lsusb
+      guvcview             # GTK+ UVC viewer for testing webcams
+      webcamoid            # Webcam management tool
+      droidcam             # Use Android device as a webcam
+      signal-desktop       # Private messaging app
+      bash                 # GNU Bourne Again Shell
+      zsh                  # Z shell
+      slack                # Team communication tool
+      nvtopPackages.full   # A (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
+      xclip
+      ctranslate2
+      opera
+      libimobiledevice
+      ifuse
+      vscode
+      # cudatoolkit
+      # customPkgs.lmstudio
+    ] ++ (with unstable; [
+      # Add unstable packages here
+      # For example:
+      # unstable.somePackage
+    ]);
 
-  home.packages = with pkgs; [
-    bat                  # A cat clone with syntax highlighting and Git integration
-    fzf                  # Command-line fuzzy finder
-    ripgrep              # Line-oriented search tool
-    gitAndTools.git-lfs  # Git extension for versioning large files
-    gitAndTools.gh       # GitHub CLI
-    htop                 # Interactive process viewer
-    jq                   # Command-line JSON processor
-    fd                   # Simple, fast, and user-friendly alternative to 'find'
-   plasma5Packages.kdeconnect-kde       # Connect smartphones to your KDE desktop
-    tmux                 # Terminal multiplexer
-    lazygit              # Simple terminal UI for git commands
-    lazydocker           # Simple terminal UI for docker commands
+    # Manage Alacritty config file directly
+    file.".config/alacritty/alacritty.toml" = {
+      # IMPORTANT: Ensure this path is correct relative to this home.nix file.
+      source = ./alacritty.toml;
+    };
 
-    jetbrains-mono
-    nerdfonts
-    ksshaskpass          # SSH password prompt for KDE
-    neofetch             # CLI system information tool
-    fastfetch
-    alacritty            # A fast, cross-platform, OpenGL terminal emulator
-    navi                 # Interactive cheatsheet tool
-    v4l-utils            # Video4Linux utilities
-    mpv                  # Media player for testing cameras
-    usbutils             # For lsusb
-    guvcview             # GTK+ UVC viewer for testing webcams
-    webcamoid            # Webcam management tool
-    droidcam             # Use Android device as a webcam
-    signal-desktop       # Private messaging app
-    bash                 # GNU Bourne Again Shell
-    zsh                  # Z shell
-    slack                # Team communication tool
-    nvtopPackages.full   # A (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
-    xclip
-    ctranslate2
-    opera
-    libimobiledevice
-    ifuse
-    vscode
-    # cudatoolkit
-    # customPkgs.lmstudio
-  ] ++ (with unstable; [
-    # Add unstable packages here
-    # For example:
-    # unstable.somePackage
-  ]);
+  }; # --- End of Top-Level Home Block ---
 
-  
+
+  # --- Top-Level Services Block ---
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    pinentryPackage = pkgs.pinentry-tty;
+    defaultCacheTtl = 3600; # 1 hour
+    maxCacheTtl = 7200; # 2 hours
+    sshKeys = [
+      "/home/ayrton/.ssh/id_ed25519"
+    ];
+  }; # --- End of Top-Level Services Block ---
+
+
+  # --- Top-Level Programs Block ---
   programs = {
+
+    # Keep alacritty enabled for .desktop file etc, but NO settings block
+    alacritty = {
+      enable = true;
+    };
+
     carapace = {
       enable = true;
       # carapace.enableNushellIntegration = true;     # not working
     };
-  
-    #nerd-fonts_0xproto
-    #nerd-fonts_3270
-  
+
+    # nerd-fonts configuration would go here if using the HM module
+
     git = {
-      enable = true; 
+      enable = true;
       userName = "ayrton";
       # email = "ayrton.mercado@gmail.com";
       extraConfig = {
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos";
       };
-    };  
+    };
 
-    zoxide.enable = true;
-    zoxide.enableNushellIntegration = true;
-    # programs.zellij.enableNushellIntegration = true;
+    zoxide = {
+      enable = true;
+      enableNushellIntegration = true; # Assuming this works from your nushell module
+    };
+
+    # programs.zellij would go here if using the HM module, likely handled by import
 
     eza = {
       enable = true;
-      enableNushellIntegration = true;
+      enableNushellIntegration = true; # Assuming this works from your nushell module
     };
-  };
+
+  }; # --- End of Top-Level Programs Block ---
+
 }
