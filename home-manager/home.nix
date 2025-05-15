@@ -94,20 +94,46 @@ in {
 
 
   # --- Top-Level Services Block ---
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-tty;
-    defaultCacheTtl = 3600; # 1 hour
-    maxCacheTtl = 7200; # 2 hours
-    sshKeys = [
-      "/home/ayrton/.ssh/id_ed25519"
-    ];
-  }; # --- End of Top-Level Services Block ---
+  # services.gpg-agent = {
+  #   enable = true;
+  #   enableSshSupport = true;
+  #   pinentryPackage = pkgs.pinentry-tty;
+  #   defaultCacheTtl = 3600; # 1 hour
+  #   maxCacheTtl = 7200; # 2 hours
+  #   sshKeys = [
+  #     "/home/ayrton/.ssh/id_ed25519"
+  #   ];
+  # }; # --- End of Top-Level Services Block ---
+
+
 
 
   # --- Top-Level Programs Block ---
   programs = {
+
+  ssh = {
+      enable = true;    # This enables management of ~/.ssh/config and other client settings
+      # startAgent = true; # Tells home-manager to ensure an agent is running.
+                        # This might inject agent startup into shell profiles or .xsession.
+
+      # Option A: Add standard keys automatically
+      addKeysToAgent = "yes"; # Will try to add ~/.ssh/id_ed25519 etc.
+
+      # Option B: Explicitly list identities (more control, use if Option A isn't enough or for non-standard names)
+      # If you use `identities`, you might want `addKeysToAgent = "no";` or leave it unset.
+      # identities = {
+      #   "my-ed25519-key" = { # A descriptive name for Nix, not the filename
+      #     file = "~/.ssh/id_ed25519";
+      #     # You can add options here if needed, e.g.,
+      #     # options = ["-t 1h"]; # Add key with a 1-hour lifetime
+      #   };
+      #   # Add other keys if you have them
+      #   # "work-rsa-key" = { file = "~/.ssh/id_rsa_work"; };
+      # };
+
+      # Like the system config, you can set an askpass program
+      # askPassword = "${pkgs.ksshaskpass}/bin/ksshaskpass";
+    };
 
     # Keep alacritty enabled for .desktop file etc, but NO settings block
     alacritty = {

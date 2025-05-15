@@ -76,12 +76,12 @@
            )
 
            
-           ssh-add -l | find ~/.ssh/id_ed25519 | ignore 
-          if $env.LAST_EXIT_CODE != 0 {
-              # If the previous command failed (exit code != 0), the key was not found.
-              print "Attempting to add SSH key to agent..." # Optional feedback
-              ssh-add ~/.ssh/id_ed25519 | ignore
-          }
+          #  ssh-add -l | find ~/.ssh/id_ed25519 | ignore 
+          # if $env.LAST_EXIT_CODE != 0 {
+          #     # If the previous command failed (exit code != 0), the key was not found.
+          #     print "Attempting to add SSH key to agent..." # Optional feedback
+          #     ssh-add ~/.ssh/id_ed25519 | ignore
+          # }
          '';     
     };
     starship = {
