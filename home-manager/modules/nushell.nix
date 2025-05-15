@@ -35,8 +35,8 @@
             pbcopy="cc";
             pbpaste="cv";
             hms="home-manager switch --flake . --impure";
-            nrs="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix";
-            nrsu="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/.config/nixos/configuration.nix --upgrade";
+            nrs="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/nova-nix-config/configuration.nix";
+            nrsu="sudo nixos-rebuild switch -I nixos-config=/home/ayrton/nova-nix-config/configuration.nix --upgrade";
             nsp="nix-shell -p ";
             nspi="nix-shell -p inkscape";
             nspc="nix-shell -p google-chrome";
