@@ -204,12 +204,13 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
+      nerdfonts
       dejavu_fonts
       font-awesome
       liberation_ttf
       fira-code
       roboto
-    ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+    ];
 
     fontconfig = {
       enable = true;
