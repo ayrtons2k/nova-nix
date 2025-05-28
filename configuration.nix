@@ -2,7 +2,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.nixos.label = "generation-2_2025-05-28_25.05-warbler_release_1";
+  system.nixos.label = "generation-2_2025-05-28_25.05-warbler_release_1.1";
 
   nixpkgs.config = {
     allowUnfree = true;
