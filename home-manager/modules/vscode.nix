@@ -6,6 +6,7 @@
 }: {
   home.packages = with pkgs; [
     dotnet-sdk_9 # Installs .NET 9.0 SDK
+    dotnet-runtime_9
   ];
 
   programs.vscode = {
