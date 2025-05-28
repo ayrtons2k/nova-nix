@@ -12,7 +12,7 @@
   programs.vscode = {
     enable = true;
 
-    extensions = with pkgs.vscode-extensions;
+    profiles.default.extensions = with pkgs.vscode-extensions;
       [
         # bbenoist.Nix
       ]

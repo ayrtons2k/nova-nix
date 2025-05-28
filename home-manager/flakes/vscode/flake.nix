@@ -21,7 +21,7 @@
       vscode-package = vscodium.packages.${system}.vscodium;
     in {
       packages.${system}.vscodium-with-extensions = vscode-package.override {
-        extensions = with pkgs.vscode-extensions; [
+        profiles.default.extensions = with pkgs.vscode-extensions; [
           # General / UI
           vscode-icons                 # File icon theme
           # ms-vscode.theme-darcula     # Example Dark Theme, You can choose a theme.

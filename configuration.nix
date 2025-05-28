@@ -2,7 +2,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.nixos.label = "generation-1_2025-05-15_24.11-Vicunha";
+  system.nixos.label = "generation-2_2025-05-28_25.05-warbler_release_1";
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -204,13 +204,12 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
-      nerdfonts
       dejavu_fonts
       font-awesome
       liberation_ttf
       fira-code
       roboto
-    ];
+    ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
     fontconfig = {
       enable = true;
@@ -232,5 +231,5 @@
   };
 
      
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

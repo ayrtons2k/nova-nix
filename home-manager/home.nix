@@ -35,7 +35,7 @@ in {
   home = {
     username = "ayrton";
     homeDirectory = "/home/ayrton";
-    stateVersion = "24.11"; # This version should match your NixOS version
+    stateVersion = "25.05"; # This version should match your NixOS version
 
     packages = with pkgs; [
       pkgs.gnupg # For gpg-agent
@@ -54,8 +54,8 @@ in {
       lazygit              # Simple terminal UI for git commands
       lazydocker           # Simple terminal UI for docker commands
       jetbrains-mono
-      nerdfonts
-      ksshaskpass          # SSH password prompt for KDE (keep if maybe used later)
+      #nerdfonts
+      #ksshaskpass          # SSH password prompt for KDE (keep if maybe used later)
       neofetch             # CLI system information tool
       fastfetch
       navi                 # Interactive cheatsheet tool
@@ -104,10 +104,6 @@ in {
   #     "/home/ayrton/.ssh/id_ed25519"
   #   ];
   # }; # --- End of Top-Level Services Block ---
-
-
-
-
   # --- Top-Level Programs Block ---
   programs = {
 
