@@ -2,7 +2,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.nixos.label = "generation-2-warbler_release_1.1";
+  system.nixos.label = "tag-nova-gen-3";
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -83,7 +83,7 @@
   };
 
   # Enable PipeWire for sound
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -204,13 +204,13 @@
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
-      nerdfonts
+      #nerdfonts
       dejavu_fonts
       font-awesome
       liberation_ttf
       fira-code
       roboto
-    ];
+    ]++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
     fontconfig = {
       enable = true;

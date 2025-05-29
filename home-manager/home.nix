@@ -54,7 +54,7 @@ in {
       lazygit              # Simple terminal UI for git commands
       lazydocker           # Simple terminal UI for docker commands
       jetbrains-mono
-      #nerdfonts
+      ner dfonts
       #ksshaskpass          # SSH password prompt for KDE (keep if maybe used later)
       neofetch             # CLI system information tool
       fastfetch
