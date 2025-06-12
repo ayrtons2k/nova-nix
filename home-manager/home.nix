@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ./home-manager/modules/vscode.nix
-    ./home-manager/modules/nushell.nix
-    ./home-manager/modules/git.nix
-    ./home-manager/modules/zellij.nix
+    ./modules/vscode.nix
+    ./modules/nushell.nix
+    ./modules/git.nix
+    ./modules/zellij.nix
   ];
 
   programs.home-manager.enable = true;
