@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, customPkgs, cursorFlakePkg, ... }:
+{ config, pkgs, unstable, ... }:
 
 {
   imports = [
@@ -10,7 +10,6 @@
 
   programs.home-manager.enable = true;
 
-  # --- Top-Level Home Block ---
   home = {
     username = "ayrton";
     homeDirectory = "/home/ayrton";
@@ -33,7 +32,7 @@
       lazygit
       lazydocker
       jetbrains-mono
-      nerdfonts
+      (nerdfonts.override { fonts = [ "FiraCode" "Hack" ]; }) # Optional: specify fonts
       neofetch
       fastfetch
       navi
@@ -44,8 +43,6 @@
       webcamoid
       droidcam
       signal-desktop
-      bash
-      zsh
       slack
       nvtopPackages.full
       xclip
@@ -54,38 +51,31 @@
       libimobiledevice
       ifuse
       vscode
-      # Add cursor package if available in cursorFlakePkg
-      # (cursorFlakePkg.packages.${pkgs.system}.cursor or null)
     ] ++ (with unstable; [
-      # Add unstable packages here if needed
+      # Add unstable packages here, e.g., neovim
     ]);
-    
+
     file.".config/alacritty/alacritty.toml".source = ./alacritty.toml;
   };
 
-  # --- Top-Level Programs Block ---
   programs = {
     ssh = {
       enable = true;
       addKeysToAgent = "yes";
     };
 
-    alacritty = {
-      enable = true;
-    };
-
     carapace = {
       enable = true;
     };
 
-    git = {
-      enable = true;
-      userName = "ayrton";
-      extraConfig = {
-        init.defaultBranch = "main";
-        safe.directory = "/etc/nixos";
-      };
-    };
+    # git = {
+    #   enable = true;
+    #   userName = "ayrton";
+    #   extraConfig = {
+    #     init.defaultBranch = "main";
+    #     safe.directory = "/etc/nixos";
+    #   };
+    # };
 
     zoxide = {
       enable = true;
