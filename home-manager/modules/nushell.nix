@@ -105,7 +105,7 @@
 
     starship = {
       enable = true;
-      settings = pkgs.lib.importTOML "/home/ayrton/nova-nix-config/home-manager/modules/starship.toml";
+      settings = pkgs.lib.importTOML "./home-manager/starship.toml";
       enableBashIntegration = true;
       enableFishIntegration = true; # This helps ensure fish environment is set up
       enableZshIntegration = true;

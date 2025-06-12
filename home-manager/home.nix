@@ -3,9 +3,9 @@
 {
   imports = [
     ./modules/vscode.nix
-    ./modules/nushell.nix
-    ./modules/git.nix
-    ./modules/zellij.nix
+    #./modules/nushell.nix
+    #./modules/git.nix
+    #./modules/zellij.nix
   ];
 
   programs.home-manager.enable = true;
@@ -32,7 +32,7 @@
       lazygit
       lazydocker
       jetbrains-mono
-      (nerdfonts.override { fonts = [ "FiraCode" "Hack" ]; }) # Optional: specify fonts
+      #(nerdfonts.override { fonts = [ "FiraCode" "Hack" ]; }) # Optional: specify fonts
       neofetch
       fastfetch
       navi
