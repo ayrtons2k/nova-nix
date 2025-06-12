@@ -4,8 +4,8 @@
   imports = [
     ./modules/vscode.nix
     #./modules/nushell.nix
-    #./modules/git.nix
-    #./modules/zellij.nix
+    ./modules/git.nix
+    ./modules/zellij.nix
   ];
 
   programs.home-manager.enable = true;
@@ -47,7 +47,7 @@
       nvtopPackages.full
       xclip
       ctranslate2
-      opera
+      #opera
       libimobiledevice
       ifuse
       vscode
