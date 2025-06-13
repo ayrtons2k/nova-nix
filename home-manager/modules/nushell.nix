@@ -47,8 +47,8 @@
         pbcopy = "cc";
         pbpaste = "cv";
         hms = "home-manager switch --flake .#ayrton@nova-nix"; # Assuming your HM user/host
-        nrs = "sudo nixos-rebuild switch --flake $HOME/nova-nix-config#nova-nix"; # Ensure flake path and host are correct
-        nrsu = "sudo nixos-rebuild switch --flake $HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
+        nrs = "sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix"; # Ensure flake path and host are correct
+        nrsu = "sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
         nsp = "nix-shell -p ";
         nspi = "nix-shell -p inkscape";
         nspc = "nix-shell -p google-chrome";
@@ -454,7 +454,7 @@
           am = "AM";
           am_or_rebase = "AM/REBASE";
           bisect = "BISECTING";
-          cherry_pick = "🍒PICKING(bold red)";
+          cherry_pick = "🍒PICKING(bold red) ";
           disabled = false;
           format = "([$state( $progress_current/$progress_total)]($style)) ";
           merge = "MERGING";
@@ -463,20 +463,20 @@
           style = "bold yellow";
         };
         git_status = {
-          ahead = "🏎💨$count";
-          behind = "😰$count";
-          conflicted = "🏳";
-          deleted = "🗑";
+          ahead = " 🏎💨$count ";
+          behind = " 😰$count";
+          conflicted = " 🏳";
+          deleted = " 🗑";
           disabled = false;
-          diverged = "😵";
+          diverged = " 😵";
           format = "([$all_status$ahead_behind]($style) )";
           ignore_submodules = false;
-          modified = "📝";
-          renamed = "👅";
+          modified = " 📝";
+          renamed = " 👅";
           staged = "[++($count)](green)";
-          stashed = "📦";
+          stashed = " 📦";
           style = "red bold bg:0xFCA17D";
-          untracked = "🤷";
+          untracked = " 🤷";
           up_to_date = "✓";
         };
         golang = {

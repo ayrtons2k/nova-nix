@@ -1,8 +1,18 @@
 { config, pkgs, self, ... }:
+let
+  # Fetch the Steven Black hosts file.
+  # This makes your configuration self-contained and reproducible.
+  stevenBlackHosts = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
+    # The sha256 hash ensures the file we download is the one we expect.
+    # See below for how to get/update this hash.
+    sha256 = "0sj4lbw2sgk29n2x7ba7kvycz2114q32rhivjxkwikr5cmdj2djk";
+  };
 
+in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.nixos.label = "flake-gen-1-impure";
+  system.nixos.label = "flake-gen-2-impure";
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -10,10 +20,54 @@
       allowUnfreePredicate = (_: true);
     };
   };
+  networking.nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
+
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = [ "~." ];
+    fallbackDns = [
+      "9.9.9.9#dns.quad9.net" # Quad9 as a fallback
+      "8.8.8.8#dns.google"   # Google as a fallback
+    ];
+  };
+  # Stubby DNS over TLS
+  # This is an example configuration for Stubby, a DNS over TLS client.
+  # It uses Cloudflare's DNS servers with DNSSEC validation.
+  # You can customize the upstream servers and settings as needed.
+  # For more information, see:  https://nixos.wiki/wiki/Encrypted_DNS
+  services.stubby = {
+      enable = true;
+      settings = pkgs.stubby.passthru.settingsExample // {
+        upstream_recursive_servers = [{
+          address_data = "1.1.1.1";
+          tls_auth_name = "cloudflare-dns.com";
+          tls_pubkey_pinset = [{
+            digest = "sha256";
+            value = "GP8Knf7qBae+aIfythytMbYnL+yowaWVeD6MoLHkVRg=";
+          }];
+        } {
+          address_data = "1.0.0.1";
+          tls_auth_name = "cloudflare-dns.com";
+          tls_pubkey_pinset = [{
+            digest = "sha256";
+            value = "GP8Knf7qBae+aIfythytMbYnL+yowaWVeD6MoLHkVRg=";
+          }];
+        }];
+      };
+    };
+
+
 
   imports = [ 
     ./hardware-configuration.nix
   ];
+
+  # networking.extraHosts takes a string and appends it to /etc/hosts.
+  # We read the file we just fetched and use its content.
+  networking.extraHosts = builtins.readFile stevenBlackHosts;  
+
+
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -180,6 +234,7 @@
       pipewire
       stdenv.cc.cc
       systemd
+      microsoft-edge
       vulkan-loader
       xorg.libX11
       xorg.libXScrnSaver
