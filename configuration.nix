@@ -2,7 +2,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.nixos.label = "tag-nova-gen-3";
+  system.nixos.label = "flake-gen-1-impure";
 
   nixpkgs.config = {
     allowUnfree = true;
