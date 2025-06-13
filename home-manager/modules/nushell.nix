@@ -46,9 +46,9 @@
         cv = "xclip -selection clipboard -o";
         pbcopy = "cc";
         pbpaste = "cv";
-        hms = "home-manager switch --flake .#ayrton@nova-nix --impure"; # Assuming your HM user/host
-        nrs = "sudo nixos-rebuild switch --flake /home/ayrton/nova-nix-config#nova-nix"; # Ensure flake path and host are correct
-        nrsu = "sudo nixos-rebuild switch --flake /home/ayrton/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
+        hms = "home-manager switch --flake .#ayrton@nova-nix"; # Assuming your HM user/host
+        nrs = "sudo nixos-rebuild switch --flake $HOME/nova-nix-config#nova-nix"; # Ensure flake path and host are correct
+        nrsu = "sudo nixos-rebuild switch --flake $HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
         nsp = "nix-shell -p ";
         nspi = "nix-shell -p inkscape";
         nspc = "nix-shell -p google-chrome";
@@ -105,7 +105,7 @@
 
     starship = {
       enable = true;
-      settings = pkgs.lib.importTOML "./home-manager/starship.toml";
+      settings = pkgs.lib.importTOML "./starship.toml";
       enableBashIntegration = true;
       enableFishIntegration = true; # This helps ensure fish environment is set up
       enableZshIntegration = true;

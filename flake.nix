@@ -21,6 +21,7 @@
           home-manager.useGlobalPkgs = true; # Share nixpkgs with the system
           home-manager.useUserPackages = true; # Install user packages to /home/ayrton/.nix-profile
           home-manager.users.ayrton = import ./home-manager/home.nix;
+          home-manager.backupFileExtension = "backup";          
           home-manager.extraSpecialArgs = {
             unstable = import nixpkgs-unstable {
               system = "x86_64-linux";
