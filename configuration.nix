@@ -108,10 +108,10 @@ in
     powerManagement.finegrained = false;
     open = false;  # Use proprietary drivers
     nvidiaSettings = true;
-    #package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     #package = config.boot.kernelPackages.nvidiaPackages.latest;
     #package = config.boot.kernelPackages.nvidiaPackages.stable;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    #package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
   # Enable KDE Plasma

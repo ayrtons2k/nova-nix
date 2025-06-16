@@ -4,6 +4,7 @@
   imports = [
     ./modules/vscode.nix
     ./modules/nushell.nix
+    ./modules/starship.nix
     ./modules/git.nix
     ./modules/zellij.nix
     #./modules/rust.nix
