@@ -25,6 +25,10 @@
         NIXPKGS_ALLOW_UNFREE = "1"; # Moved from extraConfig for consistency
       };
 
+      # def nrsu [] {
+      # ∙     ^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix" --upgrade
+      # ∙ }      
+
       shellAliases = {
         els = "exa --color=always --icons --group";
         ell = "els -la --ignore-glob ..";
@@ -47,12 +51,14 @@
         pbcopy = "cc";
         pbpaste = "cv";
         hms = "home-manager switch --flake .#ayrton@nova-nix"; # Assuming your HM user/host
-        nrs = "sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix"; # Ensure flake path and host are correct
-        nrsu = "sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
+        # nrs = """sudo nixos-rebuild switch --flake "($env.HOME)/nova-nix-config#nova-nix"""; # Ensure flake path and host are correct
+        # nrsu = """sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
         nsp = "nix-shell -p ";
         nspi = "nix-shell -p inkscape";
         nspc = "nix-shell -p google-chrome";
         aliases = "scope aliases";
+
+        
       };
 
       extraConfig = ''
@@ -85,6 +91,12 @@
           uniq # Ensure no duplicate paths
         )
 
+      def nrsu [] {
+      ∙     ^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix" --upgrade
+      ∙ }      
+
+
+
         # Example of how zoxide integration is typically handled by its Nushell support
         # The line `zoxide init nushell | save -f ~/.zoxide.nu` is not needed here
         # because `programs.zoxide.enableNushellIntegration = true;` handles it.
@@ -102,9 +114,6 @@
         # }
       '';
     };
-
-   
-
  };
 }
 
