@@ -6,7 +6,7 @@ let
     url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
     # The sha256 hash ensures the file we download is the one we expect.
     # See below for how to get/update this hash.
-    sha256 = "0sj4lbw2sgk29n2x7ba7kvycz2114q32rhivjxkwikr5cmdj2djk";
+    sha256 = "0kcnmqgfpai07dk96aiy403bk6frz0fampja2835n71zh031c5jk";
   };
 
 in
@@ -77,7 +77,7 @@ in
     loader = {
       systemd-boot = {
         enable = true;
-        configurationLimit = 2;
+        configurationLimit = 7;
 
       };
       efi.canTouchEfiVariables = true;
@@ -96,7 +96,7 @@ in
       
       settings = {
         Autologin = {
-          Session = "sway.desktop";
+          Session = "hyprland.desktop";
         };
       };
     };
@@ -171,7 +171,9 @@ in
   };
 
   programs = {
-    sway.enable = true;
+    hyprland = {
+      enable = true; # Set to true if you want to use Hyprland instead of Sway
+    };
 
 
     firefox = {
@@ -267,24 +269,37 @@ in
     text = "auth include login";
   };
   # System packages
-  environment.systemPackages = with pkgs; [
-    git
-    lnav 
-    # rofi  
-    wofi # Wayland-native replacement for Rofi
-    mako # Wayland-native notification daemon
-    swaybg # Sway's own background/wallpaper tool
-    wdisplays # Wayland-native display configuration tool
-    grim # Wayland screenshot tool
-    slurp # Wayland region selection tool (used with grim)
-    pavucontrol
-    nwg-look # GTK theme configuration for Wayland
-    networkmanagerapplet
-    blueman
-    wl-clipboard # Provides wl-copy/wl-paste for the command line
-    swaylock # The Wayland-native screen locker for Sway
-  ];
-
+  
+  
+  
+  
+  environment = {
+    #Variables used by Hyprland
+    sessionVariables = {
+      LIBVA_DRIVER_NAME = "nvidia";
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };    
+    systemPackages = with pkgs; [
+      git
+      lnav 
+      # rofi  
+      wofi # Wayland-native replacement for Rofi
+      mako # Wayland-native notification daemon
+      swaybg # Sway's own background/wallpaper tool
+      wdisplays # Wayland-native display configuration tool
+      grim # Wayland screenshot tool
+      slurp # Wayland region selection tool (used with grim)
+      pavucontrol
+      nwg-look # GTK theme configuration for Wayland
+      networkmanagerapplet
+      blueman
+      wl-clipboard # Provides wl-copy/wl-paste for the command line
+      hyprpaper # Wallpaper daemon for Hyprland
+      hyprlock # The native screen locker
+    ];
+  };
 
 
   # Font configuration

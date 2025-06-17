@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./modules/sway.nix
+    ./modules/hyprland.nix
     ./modules/vscode.nix
     ./modules/nushell.nix
     ./modules/starship.nix
@@ -39,6 +39,8 @@
       alacritty
       bat
       fzf
+      eza
+      zoxide
       ripgrep
       gitAndTools.git-lfs
       gitAndTools.gh
@@ -70,6 +72,7 @@
       libimobiledevice
       ifuse
       vscode
+      i3status-rust
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);

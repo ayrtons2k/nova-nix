@@ -39,11 +39,11 @@
         elstlale = "elstla --level";
         elstle = "elst --level";
         cat = "bat";
+        cd = "z";
         "cd.." = "cd ..";
         man = "navi"; # Consider if Carapace should handle navi completions or if navi has its own.
         cls = "clear";
         "core-cd" = "cd"; # Nushell's built-in cd
-        cd = "z";         # zoxide for cd
         cdi = "zi";       # zoxide interactive
         ns = "nvidia-smi";
         cc = "xclip -selection clipboard";
@@ -63,15 +63,16 @@
 
       extraConfig = ''
         def nrst [] {
-        '       ^sudo nixos-rebuild test --flake .#nova-nix
-        '     };
+               ^sudo nixos-rebuild test --flake .#nova-nix
+             };
         def nrs [] {
-        ∙     ^sudo nixos-rebuild switch --flake "($env.HOME)/nova-nix-config#nova-nix" 
-        ∙ }
-
+        
+        def nrs [] {
+             ^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix"
+         }
         def nrsu [] {
-        ∙     ^nrs --upgrade
-        ∙ }
+             ^nrs --upgrade
+         }
 
 
         
@@ -109,7 +110,8 @@
         # because `programs.zoxide.enableNushellIntegration = true;` handles it.
         # If zoxide isn't working, ensure its init script is correctly sourced by Nushell.
         # The Home Manager module should place something like:
-        #   source ($env.HOME | path join ".local/share/zoxide/zoxide.nu")
+        #source ($env.HOME | path join ".local/share/zoxide/zoxide.nu")
+        source ~/.zoxide.nu
         # or similar, into Nushell's startup files.
 
         # SSH Agent part (remains commented as per your original)
