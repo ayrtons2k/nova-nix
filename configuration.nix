@@ -11,12 +11,16 @@ let
 
 in
 {
+  #--- LABEL ----------------------------------------------------------------
+  system.nixos.label = "flake-gen-4-hyprland";
+  #--------------------------------------------------------------------------
+  
   imports = [ 
     ./hardware-configuration.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.nixos.label = "flake-gen-3-sway";
+  
   hardware = {
     nvidia = {
       modesetting.enable = true;

@@ -94,6 +94,7 @@ in
         "nm-applet"
         "blueman-applet"
         "kdeconnect-indicator"
+        "waybar"
       ];
 
       # --- INPUT AND GENERAL ---
