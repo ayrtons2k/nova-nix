@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./modules/i3.nix
+    ./modules/sway.nix
     ./modules/vscode.nix
     ./modules/nushell.nix
     ./modules/starship.nix

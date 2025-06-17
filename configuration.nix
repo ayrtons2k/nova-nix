@@ -74,7 +74,10 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_6_12;
-
+  boot.kernelParams = [
+    "nvidia_drm.modeset=1"
+    "video=DP-2:5120x1440@120eD"
+  ];
   networking.hostName = "nova-nix";
   networking.networkmanager.enable = true;
 
@@ -94,14 +97,11 @@ in
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable X11 and NVIDIA
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-    xkb.layout = "us";
-    xkb.variant = "";
-    windowManager.i3.enable = true;    
-  };
+  # Enable Wayland and the Sway compositor
+  programs.sway.enable = true;
+
+  # # Enable XWayland to run X11 applications on Wayland
+  # services.xserver.xwayland.enable = true;
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -115,27 +115,19 @@ in
     #package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
-  services.displayManager = {
-    defaultSession = "none+i3";
-  };
+  
+
+ 
   services.displayManager.sddm = {
     enable = true;
+    wayland.enable = true;
+    
      settings = {
       Autologin = {
-        Session = "homemanager.desktop";
+        Session = "sway.desktop";
       };
     };
   };
-  # Enable KDE Plasma
-  #services.desktopManager.plasma6.enable = true;
- services.picom = {
-    enable = true;
-    # You can configure it further here if needed, but defaults are fine to start.
-    # Example:
-    # faded = true;
-    # shadow = true;
-    
-  };  
 
   # Enable OpenSSH
   services.openssh.enable = true;
@@ -208,21 +200,26 @@ in
     url."https://github.com/".insteadOf = [ "gh:" "github:" ];
   };
 
+ security.pam.services.swaylock = {
+    text = "auth include login";
+  };
   # System packages
   environment.systemPackages = with pkgs; [
-    i3
     git
     lnav 
-    #i3wm recommended utils
-   rofi  # A more powerful application launcher and window switcher
-    dunst # A lightweight notification daemon
-    feh   # A fast image viewer, often used to set wallpapers
-    arandr # A graphical tool for managing monitor layouts
-    flameshot # A powerful screenshot tool
-    pavucontrol # A graphical mixer for PulseAudio/PipeWire
-    lxappearance # To set GTK themes, icons, and cursors
-    networkmanagerapplet # System tray icon for NetworkManager
-    blueman # System tray icon and manager for Bluetooth    
+    # rofi  
+    wofi # Wayland-native replacement for Rofi
+    mako # Wayland-native notification daemon
+    swaybg # Sway's own background/wallpaper tool
+    wdisplays # Wayland-native display configuration tool
+    grim # Wayland screenshot tool
+    slurp # Wayland region selection tool (used with grim)
+    pavucontrol
+    nwg-look # GTK theme configuration for Wayland
+    networkmanagerapplet
+    blueman
+    wl-clipboard # Provides wl-copy/wl-paste for the command line
+    swaylock # The Wayland-native screen locker for Sway
   ];
 
   # Nix-LD for compatibility
@@ -302,7 +299,7 @@ in
       antialias = true;
       hinting = {
         enable = true;
-        style = "slight";  # Options: hintnone, hintslight, hintmedium, hintfull
+        style = "none";  # Options: "none", "slight", "medium", "full"'. 
       };
       subpixel = {
         rgba = "rgb";  # Options: none, rgb, bgr, vrgb, vbgr
