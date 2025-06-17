@@ -62,6 +62,19 @@
       };
 
       extraConfig = ''
+        def nrst [] {
+        '       ^sudo nixos-rebuild test --flake .#nova-nix
+        '     };
+        def nrs [] {
+        ∙     ^sudo nixos-rebuild switch --flake "($env.HOME)/nova-nix-config#nova-nix" 
+        ∙ }
+
+        def nrsu [] {
+        ∙     ^nrs --upgrade
+        ∙ }
+
+
+        
         clear # Clears screen on new shell, personal preference
 
         # $env.NIXPKGS_ALLOW_UNFREE = 1 # Moved to environmentVariables
@@ -90,12 +103,6 @@
           # append /usr/bin/env # This is unusual, /usr/bin should be on PATH already via NixOS
           uniq # Ensure no duplicate paths
         )
-
-      def nrsu [] {
-      ∙     ^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix" --upgrade
-      ∙ }      
-
-
 
         # Example of how zoxide integration is typically handled by its Nushell support
         # The line `zoxide init nushell | save -f ~/.zoxide.nu` is not needed here
