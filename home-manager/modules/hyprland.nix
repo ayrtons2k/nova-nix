@@ -19,7 +19,63 @@ let
   '';
 in
 {
-  # ... (your home.packages goes here)
+  # --- ADD THE WAYBAR CONFIGURATION +++
+  programs.waybar = {
+    enable = true;
+    # Tell Waybar where to find its stylesheet
+    style = ./../config/waybar.css;
+    # Define the bar's layout and modules
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 40;
+        modules-left = [ "hyprland/workspaces" "hyprland/window" ];
+        modules-center = [ "clock" ];
+        modules-right = [ "tray" "pulseaudio" "network" "cpu" "memory" ];
+
+        # Module-specific settings
+        "hyprland/workspaces" = {
+          format = "{icon}";
+          format-icons = {
+            "1" = "1";
+            "2" = "2";
+            "3" = "3";
+            "4" = "4";
+            "5" = "5";
+            "default" = "";
+          };
+        };
+        
+        "clock" = {
+          format = " {:%a %d %b %H:%M}";
+          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        };
+
+        "pulseaudio" = {
+          format = "{icon} {volume}%";
+          format-muted = " Muted";
+          format-icons = {
+            default = [ "" "" ];
+          };
+        };
+
+        "network" = {
+          format-wifi = "  {essid}";
+          format-ethernet = "󰈀 {ifname}";
+          format-disconnected = "Disconnected";
+        };
+        
+        "cpu" = {
+          format = "  {usage}%";
+        };
+
+        "memory" = {
+          format = " {}%";
+        };
+      };
+    };
+  };
 
   # The Home Manager module for Hyprland
   wayland.windowManager.hyprland = {
@@ -38,7 +94,6 @@ in
         "nm-applet"
         "blueman-applet"
         "kdeconnect-indicator"
-        "hyprland-bar-wrapper"
       ];
 
       # --- INPUT AND GENERAL ---
@@ -184,4 +239,5 @@ in
       ];
     };
   };
+  home.file.".config/hypr/hyprpaper.conf".source = ./../config/hyprpaper.conf;  
 }
