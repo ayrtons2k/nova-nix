@@ -1,0 +1,36 @@
+# A basic i3status-rust config for beginners
+
+theme = "solarized-dark"
+icons = "awesome" # You can also use "material" or "none"
+
+[[block]]
+block = "time"
+interval = 5
+format = " $timestamp.datetime(f:'%a %d %b %H:%M') "
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "networkmanager"
+device_format = "{icon}"
+format = " {icon} {ssid} {graph_down} "
+
+[[block]]
+block = "cpu"
+interval = 1
+format = " $icon $util "
+
+[[block]]
+block = "memory"
+format = " $icon $mem_used.eng(w:2,p:M)/$mem_total.eng(w:2,p:M)B "
+format_alt = " $icon_swap $swap_used.eng(w:2,p:M)/$swap_total.eng(w:2,p:M)B "
+
+[[block]]
+block = "nvidia_gpu"
+format = " NV: $util "
+interval = 1
+
+[[block]]
+block = "battery"
+format = " $icon $percentage "

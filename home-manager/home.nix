@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./modules/i3.nix
     ./modules/vscode.nix
     ./modules/nushell.nix
     ./modules/starship.nix
@@ -9,6 +10,21 @@
     ./modules/zellij.nix
     #./modules/rust.nix
   ];
+  xsession = {
+    enable = true;
+    # windowManager = {
+    #   i3 = {
+    #     enable = true;
+    #     package = pkgs.i3-gaps;        
+    #     extraConfig = ''
+    #       # Set the default terminal emulator
+    #       exec_always --no-startup-id alacritty
+    #     '';
+    #   };
+    # };
+
+
+  };  
 
   programs.home-manager.enable = true;
 
@@ -29,12 +45,14 @@
       htop
       jq
       fd
-      plasma5Packages.kdeconnect-kde
+      # --- REPLACE THIS ---
+       plasma5Packages.kdeconnect-kde
+      #indicator-kdeconnect # Provides a system tray icon for i3
+
       tmux
       lazygit
       lazydocker
       jetbrains-mono
-      #(nerdfonts.override { fonts = [ "FiraCode" "Hack" ]; }) # Optional: specify fonts
       neofetch
       fastfetch
       navi
@@ -49,7 +67,6 @@
       nvtopPackages.full
       xclip
       ctranslate2
-      #opera
       libimobiledevice
       ifuse
       vscode
@@ -57,36 +74,8 @@
       # Add unstable packages here, e.g., neovim
     ]);
 
-    file.".config/alacritty/alacritty.toml".source = ./alacritty.toml;
+    file.".config/alacritty/alacritty.toml".source = ./config/alacritty.toml;
   };
 
-  programs = {
-    ssh = {
-      enable = true;
-      addKeysToAgent = "yes";
-    };
-
-    carapace = {
-      enable = true;
-    };
-
-    # git = {
-    #   enable = true;
-    #   userName = "ayrton";
-    #   extraConfig = {
-    #     init.defaultBranch = "main";
-    #     safe.directory = "/etc/nixos";
-    #   };
-    # };
-
-    zoxide = {
-      enable = true;
-      enableNushellIntegration = true;
-    };
-
-    eza = {
-      enable = true;
-      enableNushellIntegration = true;
-    };
-  };
+  # ... (keep the rest of your home.nix config)
 }

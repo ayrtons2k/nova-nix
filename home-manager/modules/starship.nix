@@ -13,7 +13,8 @@
           continuation_prompt = "[∙](bright-black) ";
           #format = "[](0x9A348E)$username$hostname$localip$shlvl$singularity$kubernetes[](fg:0x9A348E bg:0xDA627D)$directory$vcsh[](fg:0xDA627D bg:0xFCA17D)$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch[](fg:0x86BBD8 bg:0x06969A)$docker_context$package$buf[](fg:0xFCA17D bg:0x86BBD8)$c$cmake$cobol$container$daml$dart$deno$dotnet$elixir$elm$erlang$golang$haskell$helm$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$pulumi$purescript$python$rlang$red$ruby$rust$scala$swift$terraform$vlang$vagrant$zig$nix_shell$conda$spack$memory_usage$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$cmd_duration$line_break$jobs$battery[](fg:0x06969A bg:0x33658A)$time$status$shell$character";
           
-          format = "[](#a3aed2)\[   ](bg:#a3aed2 fg:#090c0c)\[](fg:#a3aed2)\[](fg:#a3aed2)\$time\[](fg:#a3aed2)\[](fg:#769ff0 bg:#394260)\$directory\[](fg:#769ff0)\$singularity\$kubernetes\$vcsh\$fossil_branch\$pijul_channel\$docker_context\$package\$c\$cmake\$cobol\$daml\$dart\$deno\$dotnet\$elixir\$elm\$erlang\$fennel\$golang\$guix_shell\$haskell\$haxe\$helm\$java\$julia\$kotlin\$gradle\$lua\$nim\$nodejs\$ocaml\$opa\$perl\$php\$pulumi\$purescript\$python\$raku\$rlang\$red\$ruby\$rust\$scala\$solidity\$swift\$terraform\$vlang\$vagrant\$zig\$buf\$nix_shell\$conda\$meson\$spack\$memory_usage\$aws\$gcloud\$openstack\$azure\$crystal\$custom\$jobs\$status\$os\$container\[](fg:#212736 bg:#1d2230)\$character";
+          format = "[](#a3aed2)\[   ](bg:#a3aed2 fg:#090c0c)\[](fg:#a3aed2)\[](fg:#a3aed2)\$time\[](fg:#a3aed2)\[](fg:#394260)\$directory\[](fg:#394260)\$singularity\$kubernetes\$vcsh\$fossil_branch\$pijul_channel\$docker_context\$package\$c\$cmake\$cobol\$daml\$dart\$deno\$dotnet\$elixir\$elm\$erlang\$fennel\$golang\$guix_shell\$haskell\$haxe\$helm\$java\$julia\$kotlin\$gradle\$lua\$nim\$nodejs\$ocaml\$opa\$perl\$php\$pulumi\$purescript\$python\$raku\$rlang\$red\$ruby\$rust\$scala\$solidity\$swift\$terraform\$vlang\$vagrant\$zig\$buf\$nix_shell\$conda\$meson\$spack\$memory_usage\$aws\$gcloud\$openstack\$azure\$crystal\$custom\$jobs\$status\$os\$container\[](fg:#212736 bg:#1d2230)\$character";
+
 
               # right_format = "
               # $git_branch\
@@ -199,7 +200,7 @@
           directory = {
             disabled = false;
             fish_style_pwd_dir_length = 0;
-            format = "[$path]($style)[$read_only]($read_only_style) ";
+            format = "[$path]($style)[$read_only]($read_only_style)";
             home_symbol = "~";
             read_only = " ";
             read_only_style = "red";

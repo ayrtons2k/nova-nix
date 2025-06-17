@@ -1,0 +1,139 @@
+#ln ~/.config/nixos/home-manager/alacritty.toml alacritty.toml
+[terminal.shell]
+program = "zellij"
+
+[cursor]
+style = "Beam"
+
+[font]
+size = 9.0
+
+[font.normal]
+family = "monospace"
+
+[window]
+startup_mode = "Windowed"
+dynamic_padding = true
+opacity = 1.0
+
+[window.padding]
+x = 6
+y = 0
+
+#[window.dimensions]
+#columns = 90
+#lines = 25
+
+[colors.normal]
+black = "#21222c"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#bd93f9" 
+magenta = "#ff79c6"
+cyan = "#8be9fd"
+white = "#f8f8f2"
+
+[colors.primary]
+background = "#282a36"
+foreground = "#f8f8f2"
+
+[colors.cursor]
+text = "CellBackground"
+cursor = "CellForeground"
+
+#------------------------------------------
+# import = ["/home/drew/.config/alacritty/catppuccin/catppuccin-mocha.toml"]
+# live_config_reload = true
+# window.opacity = 1.0
+
+# [[colors.indexed_colors]]
+# color = "#FAB387"
+# index = 16
+
+# [[colors.indexed_colors]]
+# color = "#F5E0DC"
+# index = 17
+
+# [colors.bright]
+# black = "#585B70"
+# blue = "#89B4FA"
+# cyan = "#94E2D5"
+# green = "#A6E3A1"
+# magenta = "#F5C2E7"
+# red = "#F38BA8"
+# white = "#A6ADC8"
+# yellow = "#F9E2AF"
+
+# [colors.cursor]
+# cursor = "#F5E0DC"
+# text = "#1E1E2E"
+
+# [colors.dim]
+# black = "#45475A"
+# blue = "#89B4FA"
+# cyan = "#94E2D5"
+# green = "#A6E3A1"
+# magenta = "#F5C2E7"
+# red = "#F38BA8"
+# white = "#BAC2DE"
+# yellow = "#F9E2AF"
+
+# [colors.hints.end]
+# background = "#A6ADC8"
+# foreground = "#1E1E2E"
+
+# [colors.hints.start]
+# background = "#F9E2AF"
+# foreground = "#1E1E2E"
+
+# [colors.normal]
+# black = "#45475A"
+# blue = "#89B4FA"
+# cyan = "#94E2D5"
+# green = "#A6E3A1"
+# magenta = "#F5C2E7"
+# red = "#F38BA8"
+# white = "#BAC2DE"
+# yellow = "#F9E2AF"
+
+# [colors.primary]
+# background = "#1E1E2E"
+# bright_foreground = "#CDD6F4"
+# dim_foreground = "#CDD6F4"
+# foreground = "#CDD6F4"
+
+# [colors.search.focused_match]
+# background = "#A6E3A1"
+# foreground = "#1E1E2E"
+
+# [colors.search.matches]
+# background = "#A6ADC8"
+# foreground = "#1E1E2E"
+
+# [colors.selection]
+# background = "#F5E0DC"
+# text = "#1E1E2E"
+
+# [colors.vi_mode_cursor]
+# cursor = "#B4BEFE"
+# text = "#1E1E2E"
+
+# [font]
+# size = 12
+
+# [font.normal]
+# family = "FiraCode Nerd Font"
+# style = "Regular"
+
+# [[keyboard.bindings]]
+# action = "SpawnNewInstance"
+# key = "Return"
+# mods = "Control|Shift"
+
+# [shell]
+# program = "/usr/bin/fish"
+
+# [window.padding]
+# x = 20
+# y = 20

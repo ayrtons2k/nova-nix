@@ -100,6 +100,7 @@ in
     videoDrivers = [ "nvidia" ];
     xkb.layout = "us";
     xkb.variant = "";
+    windowManager.i3.enable = true;    
   };
 
   hardware.nvidia = {
@@ -114,9 +115,27 @@ in
     #package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
+  services.displayManager = {
+    defaultSession = "none+i3";
+  };
+  services.displayManager.sddm = {
+    enable = true;
+     settings = {
+      Autologin = {
+        Session = "homemanager.desktop";
+      };
+    };
+  };
   # Enable KDE Plasma
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  #services.desktopManager.plasma6.enable = true;
+ services.picom = {
+    enable = true;
+    # You can configure it further here if needed, but defaults are fine to start.
+    # Example:
+    # faded = true;
+    # shadow = true;
+    
+  };  
 
   # Enable OpenSSH
   services.openssh.enable = true;
@@ -191,8 +210,19 @@ in
 
   # System packages
   environment.systemPackages = with pkgs; [
+    i3
     git
     lnav 
+    #i3wm recommended utils
+   rofi  # A more powerful application launcher and window switcher
+    dunst # A lightweight notification daemon
+    feh   # A fast image viewer, often used to set wallpapers
+    arandr # A graphical tool for managing monitor layouts
+    flameshot # A powerful screenshot tool
+    pavucontrol # A graphical mixer for PulseAudio/PipeWire
+    lxappearance # To set GTK themes, icons, and cursors
+    networkmanagerapplet # System tray icon for NetworkManager
+    blueman # System tray icon and manager for Bluetooth    
   ];
 
   # Nix-LD for compatibility
