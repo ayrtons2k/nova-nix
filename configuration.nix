@@ -74,8 +74,10 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_6_12;
- boot.kernelParams = [ "nvidia_drm.modeset=1" ];  
-
+  boot.kernelParams = [
+    "nvidia_drm.modeset=1"
+    "video=DP-2:5120x1440@120eD"
+  ];
   networking.hostName = "nova-nix";
   networking.networkmanager.enable = true;
 
@@ -113,9 +115,13 @@ in
     #package = config.boot.kernelPackages.nvidiaPackages.production;
   };
 
+  
+
  
   services.displayManager.sddm = {
     enable = true;
+    wayland.enable = true;
+    
      settings = {
       Autologin = {
         Session = "sway.desktop";
@@ -194,6 +200,9 @@ in
     url."https://github.com/".insteadOf = [ "gh:" "github:" ];
   };
 
+ security.pam.services.swaylock = {
+    text = "auth include login";
+  };
   # System packages
   environment.systemPackages = with pkgs; [
     git
@@ -290,7 +299,7 @@ in
       antialias = true;
       hinting = {
         enable = true;
-        style = "slight";  # Options: hintnone, hintslight, hintmedium, hintfull
+        style = "none";  # Options: "none", "slight", "medium", "full"'. 
       };
       subpixel = {
         rgba = "rgb";  # Options: none, rgb, bgr, vrgb, vbgr

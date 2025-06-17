@@ -3,84 +3,99 @@
 let
   myTerminal = "alacritty";
   myUser = "ayrton";
+
+  sway-screenshot-wrapper = pkgs.writeShellScriptBin "sway-screenshot-wrapper" ''
+    #!${pkgs.stdenv.shell}
+    ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" - | ${pkgs.wl-clipboard}/bin/wl-copy
+  '';
 in
 {
   home.packages = with pkgs; [
     i3status-rust
     brightnessctl
+    sway-screenshot-wrapper
   ];
 
-  # The main Sway module configuration
-  programs.sway = {
+  wayland.windowManager.sway = {
     enable = true;
+    wrapperFeatures.gtk = true;
 
-    config = {
+    config = rec {
       modifier = "Mod4";
       terminal = myTerminal;
 
-      bars = [
-        {
-          command = "${pkgs.i3status-rust}/bin/i3status-rust -c /home/${myUser}/.config/i3status-rust/config.toml";
-        }
+      bars = [ { command = "${pkgs.i3status-rust}/bin/i3status-rust -c /home/${myUser}/.config/i3status-rust/config.toml"; } ];
+      gaps = { inner = 10; outer = 5; };
+      startup = [
+        { command = "nm-applet"; }
+        { command = "blueman-applet"; }
+        { command = "kdeconnect-indicator"; }
       ];
 
-      gaps = {
-        inner = 10;
-        outer = 5;
+      fonts = { names = [ "JetBrains Mono" ]; size = 10.0; };
+      # colors = {
+      #   background = "#282828";
+      #   focused = { background = "#3c3836"; border = "#fabd2f"; childBorder = "#fabd2f"; indicator = "#fabd2f"; text = "#ebdbb2"; };
+      #   unfocused = { background = "#282828"; border = "#504945"; childBorder = "#504945"; indicator = "#504945"; text = "#a89984"; };
+      # };
+      input = {
+        "*" = { accel_profile = "flat"; };
+        "type:touchpad" = { dwt = "enabled"; tap = "enabled"; };
+      };
+      output."*" = { 
+        resolution = "5120x1440@119.986Hz";
+        scale = "1.0";
+        bg = "${../../wallpapers/i3wm-nova-nix.png} fill"; 
+
+      };
+
+      keybindings = {
+        # Window & App Management
+        "${modifier}+Shift+q" = "kill";
+        "${modifier}+d" = "exec wofi --show drun";
+        "${modifier}+Shift+l" = "exec swaylock -f -c 000000";
+
+        # Sway Session Management
+        "${modifier}+Shift+c" = "reload";
+        "${modifier}+Shift+r" = "mode 'resize'";
+        "${modifier}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut...' -B 'Yes, exit Sway' 'swaymsg exit'";
+
+        # --- WORKSPACE BINDINGS ARE NOW HERE ---
+        "${modifier}+1" = "workspace 1";
+        "${modifier}+Shift+1" = "move container to workspace 1";
+        "${modifier}+2" = "workspace 2";
+        "${modifier}+Shift+2" = "move container to workspace 2";
+        "${modifier}+3" = "workspace 3";
+        "${modifier}+Shift+3" = "move container to workspace 3";
+        "${modifier}+4" = "workspace 4";
+        "${modifier}+Shift+4" = "move container to workspace 4";
+        "${modifier}+5" = "workspace 5";
+        "${modifier}+Shift+5" = "move container to workspace 5";
+
+        # Function & Multimedia Keys
+        "Print" = "exec sway-screenshot-wrapper";
+        "XF86AudioRaiseVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
+        "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
+      };
+
+      modes = {
+        resize = {
+          "h" = "resize shrink width 10px"; "j" = "resize grow height 10px"; "k" = "resize shrink height 10px"; "l" = "resize grow width 10px";
+          "Left" = "resize shrink width 10px"; "Down" = "resize grow height 10px"; "Up" = "resize shrink height 10px"; "Right" = "resize grow width 10px";
+          "Return" = "mode 'default'"; "Escape" = "mode 'default'";
+        };
       };
     };
 
-    # extraConfig is where we adapt our i3 config for Sway
+    # extraConfig is now perfectly minimal, as it should be.
     extraConfig = ''
-      set $mod Mod4
-      font pango:JetBrains Mono 10
+      # Explicitly set the resolution for your monitor.
+      output DP-2 resolution 5120x1440@120Hz
 
-      # --- KEYBINDINGS ADAPTED FOR SWAY ---
-      bindsym $mod+Return exec ${myTerminal}
-      bindsym $mod+Shift+q kill
-      # Use wofi instead of rofi
-      bindsym $mod+d exec wofi --show drun
-      # Use swaylock instead of i3lock
-      bindsym $mod+Shift+l exec swaylock -f -c 000000
-      
-      bindsym $mod+Shift+c reload
-      bindsym $mod+Shift+r restart
-      # Use swaynag instead of i3-nagbar
-      bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit Sway?' -B 'Yes, exit Sway' 'swaymsg exit'
-
-      # Use grim+slurp instead of flameshot
-      bindsym Print exec grim -g "$(slurp)" - | wl-copy
-
-      # Multimedia keys are unchanged
-      bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-      bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-      bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-      bindsym XF86MonBrightnessUp exec brightnessctl set +5%
-      bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-
-      # --- STARTUP APPS ---
-      exec --no-startup-id nm-applet
-      exec --no-startup-id blueman-applet
-      exec --no-startup-id kdeconnect-indicator
-
-      # --- WALLPAPER ---
-      # This is the Sway-native way to set the wallpaper, replacing feh.
-      # 'output *' applies to all connected monitors.
-      output * bg ${../../wallpapers/i3wm-nova-nix.png} fill
-
-      # Workspace bindings (unchanged from i3)
-      bindsym $mod+1 workspace 1
-      bindsym $mod+Shift+1 move container to workspace 1
-      bindsym $mod+2 workspace 2
-      bindsym $mod+Shift+2 move container to workspace 2
-      bindsym $mod+3 workspace 3
-      bindsym $mod+Shift+3 move container to workspace 3
-      bindsym $mod+4 workspace 4
-      bindsym $mod+Shift+4 move container to workspace 4
-      bindsym $mod+5 workspace 5
-      bindsym $mod+Shift+5 move container to workspace 5
-
-      # Window rules (unchanged from i3)
+      # Window assignment and floating rules.
       assign [class="^firefox$"] → 2
       assign [class="^code$"] → 3
       for_window [class="Pavucontrol"] floating enable
@@ -89,6 +104,5 @@ in
     '';
   };
 
-  # Keep the i3status config, as swaybar is compatible with it
   home.file.".config/i3status-rust/config.toml".source = ../config/i3status-rust.toml;
 }
