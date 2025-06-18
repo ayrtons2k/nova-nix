@@ -4,8 +4,13 @@ let
   myTerminal = "alacritty";
   myUser = "ayrton";
 
+  # --- 1. THEME CONFIGURATION ---
+  # Change the primary color here to theme your entire desktop!
+  # Your yellow from before:
   primaryColor = "fabd2f"; 
-
+  # The purple from the screenshot:
+  # primaryColor = "6C4C75";
+# We'll build a Gruvbox-style palette around your primary color
   colors = {
     primary = "rgb(${primaryColor})";
     background = "rgb(282828)";
@@ -20,11 +25,14 @@ let
   # Set the font for the entire system
   font = "JetBrainsMono Nerd Font";
 
+#Wofi power menu
+# in your let block, alongside your other scripts
+
  power-menu-script = pkgs.writeShellScriptBin "power-menu" ''
     #!${pkgs.stdenv.shell}
 
     # Define the options with Nerd Font icons
-    options=" Lock \n  Logout \n  Suspend  \n  Reboot \n  Shutdown"
+    options=" Lock\n Logout\n Suspend\n Reboot\n Shutdown"
 
     # Show the menu with wofi, using the explicit Nix store path for wofi
     # This makes the script much more reliable.
@@ -50,12 +58,7 @@ let
     esac
   '';
 
-
-  hyprland-bar-wrapper = pkgs.writeShellScriptBin "hyprland-bar-wrapper" ''
-    #!${pkgs.stdenv.shell}
-    exec ${pkgs.sway}/bin/swaybar --status-command "${pkgs.i3status-rust}/bin/i3status-rs -c /home/${myUser}/.config/i3status-rust/config.toml"
-  '';
-
+ 
   # --- SCRIPT WRAPPERS ---
 
   screenshot-wrapper = pkgs.writeShellScriptBin "screenshot-region" ''
@@ -80,7 +83,6 @@ let
     #!${pkgs.stdenv.shell}
     pkill -SIGUSR1 waybar
   '';
-
 
   # --- ++ NEW ++ : Keybinding Cheat Sheet Generation ---
   keybind-hints = ''
@@ -137,10 +139,11 @@ let
   keybind-script = pkgs.writeShellScriptBin "keybinds" ''
     #!''${pkgs.stdenv.shell}
     echo -e "${keybind-hints}" | ${pkgs.wofi}/bin/wofi --show dmenu -i --style ~/.config/wofi/style.css --width=600 --height=500
-  '';  
+  '';
+
 in
 {
-   # Make all our scripts and new packages available
+  # Make all our scripts and new packages available
   home.packages = with pkgs; [
     # ... your other packages
     power-menu-script 
@@ -149,7 +152,7 @@ in
     # Utilities
     grim 
     slurp 
-    wl-clipboard 
+    wl-clipboard jq
     brightnessctl 
         # Your existing packages
     # All our script wrappers
@@ -159,130 +162,23 @@ in
     toggle_bar
     keybind-script
     # New dependencies
+    wofi
     jq
   ];
-  # --- ADD THE WAYBAR CONFIGURATION +++
-  programs.waybar = {
-    enable = true;
-    # Tell Waybar where to find its stylesheet
-    style = ./../config/waybar.css;
-    # Define the bar's layout and modules
-    settings = {
-      mainBar = {
-        layer = "top";
-        position = "top";
-        height = 40;
-        modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
-        modules-center = [ "clock" ];
-        modules-right = [ "tray" "pulseaudio" "network" "cpu" "memory" "custom/power"];
 
-        # Module-specific settings
-        "hyprland/workspaces" = {
-          format = "{icon}";
-          format-icons = {
-            "1" = "1";
-            "2" = "2";
-            "3" = "3";
-            "4" = "4";
-            "5" = "5";
-            "default" = "";
-          };
-        };
-
-
-        "custom/launcher" = 
-          { 
-            format = " "; 
-            tooltip = false; 
-            on-click = "wofi --show drun"; 
-          };
-
-        "custom/power" = { 
-          format = ""   ; 
-          tooltip = false; 
-          on-click = "wlogout"; 
-        };
-
-        
-        "clock" = {
-          format = " {:%a %d %b %H:%M}";
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-        };
-
-        "pulseaudio" = {
-          format = "{icon} {volume}%";
-          format-muted = " Muted";
-          format-icons = {
-            default = [ "" "" ];
-          };
-        };
-
-        "network" = {
-          format-wifi = "  {essid}";
-          format-ethernet = "󰈀 {ifname}";
-          format-disconnected = "Disconnected";
-        };
-        
-        "cpu" = {
-          format = "  {usage}%";
-        };
-
-        "memory" = {
-          format = " {}%";
-        };
-      };
-    };
-  };
-
-
-   programs.wlogout = {
-    enable = true;
-    layout = [
-      { label = "lock"; action = "hyprlock"; }
-      { label = "logout"; action = "hyprctl dispatch exit"; }
-      { label = "suspend"; action = "systemctl suspend"; }
-      { label = "reboot"; action = "systemctl reboot"; }
-      { label = "shutdown"; action = "systemctl shutdown now"; }
-    ];
-    style = ''
-      * {
-          background-image: none;
-          font-family: ${font};
-      }
-      window {
-          background-color: rgba(24, 25, 38, 0.8);
-      }
-      button {
-          color: ${colors.foreground};
-          background-color: ${colors.background};
-          border-style: solid;
-          border-width: 2px;
-          border-color: ${colors.black};
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 25%;k
-      }
-      button:focus, button:active, button:hover {
-          background-color: ${colors.primary};
-          color: ${colors.background};
-          border-color: ${colors.primary};
-      }
-      lock { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
-      logout { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/logout.png"); }
-      suspend { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/suspend.png"); }
-      reboot { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
-      shutdown { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
-    '';
-  };
+  # # Waybar Configuration (Looks good!)
+  # programs.waybar = {
+  #   enable = true;
+  #   style = ./../config/waybar.css;
+  #   settings = {
+  #     # ... your waybar settings are unchanged ...
+  #   };
+  # };
 
   # The Home Manager module for Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
-
-    # We use a `let` block for clarity and to avoid repeating "SUPER"
-    # This makes the config much easier to read and modify.
     settings = let
-      # Set the Super key (Windows key) as our main modifier
       mainMod = "SUPER";
     in {
       # --- MONITOR AND STARTUP ---
@@ -296,26 +192,26 @@ in
       ];
 
       # --- INPUT AND GENERAL ---
-      input = {
-        kb_layout = "us";
-        follow_mouse = 1;
-        accel_profile = "flat";
-        touchpad.natural_scroll = true;
-      };
-
+      input = { /* ...unchanged... */ };
+      
+      # General settings
       general = {
-        gaps_in = 10;
-        gaps_out = 5;
+        gaps_in = 5;
+        gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "rgb(fabd2f)";
-        "col.inactive_border" = "rgb(504945)";
+        "col.active_border" = "${colors.primary}";
+        "col.inactive_border" = "${colors.black}";
         layout = "dwindle";
       };
-
-      # --- DECORATION AND ANIMATION ---
+      
+            # Decorations (blur, rounding, shadows)
       decoration = {
-        rounding = 10;
+        rounding = 15;
         blur.enabled = true;
+        # drop_shadow = true;
+        #shadow_range = 12;
+        #shadow_render_power = 2;
+        #"col.shadow" = "rgba(00000044)";
       };
 
       animations = {
@@ -329,15 +225,14 @@ in
           "workspaces, 1, 6, default"
         ];
       };
-
+      
       # --- MOUSE BINDINGS ---
-      # Move/resize windows with mainMod + LMB/RMB and dragging
       bindm = [
         "${mainMod}, mouse:272, movewindow"
         "${mainMod}, mouse:273, resizewindow"
       ];
 
-     # --- KEYBINDINGS ---
+      # --- KEYBINDINGS ---
        bind = [
         # -- Apps & Core Window Management --
         "${mainMod}, RETURN, exec, ${myTerminal}"
@@ -416,16 +311,164 @@ in
         ", XF86MonBrightnessUp, exec, brightnessctl set +5%"
         ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
-
       # --- WINDOW RULES ---
-      windowrulev2 = [
-        "workspace 2, class:^(firefox)$"
-        "workspace 3, class:^(Code)$" # Note: VSCode class is often capitalized
-        "float, class:^(Pavucontrol)$"
-        "float, class:^(blueman-manager)$"
-        "float, title:^(alsamixer)$"
-      ];
+      windowrulev2 = [ /* ...unchanged... */ ];
     };
   };
-  home.file.".config/hypr/hyprpaper.conf".source = ./../config/hyprpaper.conf;  
+ # --- 4. WAYBAR (THE TOP BAR) ---
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        height = 45;
+        spacing = 5;
+        "modules-left" = [ "custom/launcher" "hyprland/window" ];
+        "modules-center" = [ "hyprland/workspaces" ];
+        "modules-right" = [ "pulseaudio" "network" "cpu" "memory" "battery" "clock" "tray" "custom/power" ];
+
+        # Module definitions
+        "custom/launcher" = { format = " "; tooltip = false; on-click = "wofi --show drun"; };
+        "hyprland/window" = { max-length = 50; };
+        "hyprland/workspaces" = { format = "{icon}"; format-icons = { "default" = ""; "active" = ""; }; };
+        "pulseaudio" = { format = "{icon} {volume}%"; format-icons = { "default" = ["" "" ""]; }; on-click = "pavucontrol"; };
+        "network" = { format-wifi = "  {essid}"; format-ethernet = "󰈀"; format-disconnected = "󰖪"; };
+        "cpu" = { format = "  {usage}%"; };
+        "memory" = { format = " {used:0.1f}G"; };
+        #"battery" = { format = "{icon} {capacity}%"; format-icons = ["", "", "", "", ""]; };
+        "clock" = { format = "{:%H:%M}"; };
+        "custom/power" = { format = ""; tooltip = false; on-click = "wlogout"; };
+      };
+    };
+    # The crucial CSS to get the puffy, rounded look
+    style = ''
+      * {
+        font-family: ${font}, FontAwesome;
+        font-size: 14px;
+        border: none;
+        border-radius: 20px;
+      }
+      window#waybar {
+        background: transparent;
+        color: ${colors.foreground};
+      }
+      #workspaces, #clock, #battery, #pulseaudio, #network, #cpu, #memory, #custom-launcher, #custom-power, #tray, #window {
+        background: ${colors.black};
+        padding: 4px 14px;
+        margin: 5px 3px;
+        color: ${colors.foreground};
+      }
+      #workspaces button:hover {
+        box-shadow: inherit;
+        text-shadow: inherit;
+      }
+      #workspaces button.active {
+        background: ${colors.primary};
+        color: ${colors.background};
+      }
+    '';
+  };
+
+   programs.wlogout = {
+    enable = true;
+    layout = [
+      { label = "lock"; action = "hyprlock"; }
+      { label = "logout"; action = "hyprctl dispatch exit"; }
+      { label = "suspend"; action = "systemctl suspend"; }
+      { label = "reboot"; action = "systemctl reboot"; }
+      { label = "shutdown"; action = "systemctl shutdown now"; }
+    ];
+    style = ''
+      * {
+          background-image: none;
+          font-family: ${font};
+      }
+      window {
+          background-color: rgba(24, 25, 38, 0.8);
+      }
+      button {
+          color: ${colors.foreground};
+          background-color: ${colors.background};
+          border-style: solid;
+          border-width: 2px;
+          border-color: ${colors.black};
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 25%;
+      }
+      button:focus, button:active, button:hover {
+          background-color: ${colors.primary};
+          color: ${colors.background};
+          border-color: ${colors.primary};
+      }
+      #lock { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
+      #logout { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/logout.png"); }
+      #suspend { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/suspend.png"); }
+      #reboot { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
+      #shutdown { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
+    '';
+  };
+
+  # Add hyprpaper config and wofi style file
+  home.file.".config/hypr/hyprpaper.conf".source = ./../config/hyprpaper.conf;
+  
+  # ++ NEW ++ Wofi stylesheet for the keybinding helper
+  home.file.".config/wofi/style.css".text = ''
+    /* A basic wofi style that matches your theme */
+    window {
+        font-family: "JetBrainsMono Nerd Font", monospace;
+        font-size: 14px;
+        background-color: #282828;
+        color: #ebdbb2;
+        border: 2px solid #fabd2f;
+        border-radius: 10px;
+    }
+    #input {
+        background-color: #504945;
+        border: none;
+        border-radius: 0;
+        padding: 8px;
+        margin: 8px;
+    }
+    #entry:selected {
+        background-color: #fabd2f;
+        color: #282828;
+    }
+  '';
+  #Wofi power menu
+  home.file.".config/wofi/powermenu.css".text = ''
+    /* Power menu style, looks similar to the main style */
+    window {
+        font-family: "JetBrainsMono Nerd Font", monospace;
+        font-size: 16px;
+        background-color: #282828;
+        color: #ebdbb2;
+        border: 2px solid #fabd2f;
+        border-radius: 10px;
+    }
+
+    #input {
+        visibility: hidden; /* We don't need to search */
+    }
+    
+    #outer-box {
+        padding: 20px;
+    }
+
+    #entry {
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    /* Make the selected item stand out, with a dangerous red color */
+    #entry:selected {
+        background-color: #fb4934; /* Gruvbox red */
+        color: #282828;
+    }
+  '';
+
+
+
+
 }
