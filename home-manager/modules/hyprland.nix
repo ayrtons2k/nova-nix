@@ -192,20 +192,20 @@ in
 
         "custom/launcher" = 
           { 
-            format = " "; 
+            format = "     "; 
             tooltip = false; 
             on-click = "wofi --show drun"; 
           };
 
         "custom/power" = { 
-          format = ""   ; 
+          format = "    "; 
           tooltip = false; 
           on-click = "wlogout"; 
         };
 
         
         "clock" = {
-          format = " {:%a %d %b %H:%M}";
+          format = "  {:%a %d %b %H:%M} ";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
@@ -213,22 +213,22 @@ in
           format = "{icon} {volume}%";
           format-muted = " Muted";
           format-icons = {
-            default = [ "" "" ];
+            default = [ "  " "   " ];
           };
         };
 
         "network" = {
-          format-wifi = "  {essid}";
-          format-ethernet = "󰈀 {ifname}";
-          format-disconnected = "Disconnected";
+          format-wifi = "   {essid} ";
+          format-ethernet = " 󰈀 {ifname} ";
+          format-disconnected = " Disconnected ";
         };
         
         "cpu" = {
-          format = "  {usage}%";
+          format = "   {usage}% ";
         };
 
         "memory" = {
-          format = " {}%";
+          format = "  {}% ";
         };
       };
     };
