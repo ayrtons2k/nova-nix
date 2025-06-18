@@ -50,30 +50,14 @@
         cv = "xclip -selection clipboard -o";
         pbcopy = "cc";
         pbpaste = "cv";
-        # nrs = """sudo nixos-rebuild switch --flake "($env.HOME)/nova-nix-config#nova-nix"""; # Ensure flake path and host are correct
-        # nrsu = """sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
         nsp = "nix-shell -p ";
         nspi = "nix-shell -p inkscape";
         nspc = "nix-shell -p google-chrome";
         aliases = "scope aliases";
-
-        
       };
 
       extraConfig = ''
-        # def nrst [] {
-        #        ^sudo nixos-rebuild test --flake .#nova-nix
-        #      };
-        # def nrs [] {
         
-        # def nrs [] {
-        #      ^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix"
-        #  }
-        # def nrsu [] {
-        #      ^nrs --upgrade
-        #  }
-
-
         
         clear # Clears screen on new shell, personal preference
 

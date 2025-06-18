@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-
+{ pkgs, options,... }:
 let
   myTerminal = "alacritty";
   myUser = "ayrton";
@@ -24,7 +23,12 @@ let
     #!${pkgs.stdenv.shell}
 
     # Define the options with Nerd Font icons
-    options=" Lock \n  Logout \n  Suspend  \n  Reboot \n  Shutdown"
+    options=
+      " Lock
+        Logout
+        Suspend
+        Reboot
+        Shutdown"
 
     # Show the menu with wofi, using the explicit Nix store path for wofi
     # This makes the script much more reliable.
@@ -92,7 +96,7 @@ let
       SUPER + RETURN                Launch Terminal
       SUPER + H                     Launch htop
       SUPER + D                     App Launcher (wofi)
-      SHIFT + Q             Close active window
+      SHIFT + Q                     Close active window
       SUPER + V                     Toggle floating
       SUPER + F                     Toggle fullscreen
 
@@ -111,9 +115,9 @@ let
       SUPER + K                     Show this cheat sheet
       SUPER + B                     Toggle Waybar visibility
       SUPER + P                     Color Picker (copy hex)
-      Print Screen          Screenshot region
-      SUPER + Print         Screenshot fullscreen
-      SUPER + SHIFT + Print Screenshot active window
+      Print Screen                  Screenshot region
+      SUPER + Print                 Screenshot fullscreen
+      SUPER + SHIFT + Print         Screenshot active window
 
     -- EYE CANDY --
       SUPER + CTRL + B              Toggle background blur
@@ -129,7 +133,7 @@ let
       SUPER + SHIFT + C             Reload Hyprland config
       SUPER + SHIFT + E             Exit Hyprland session
       SUPER + SHIFT + S             Suspend System
-      (Media Keys)          Volume / Brightness
+      (Media Keys)                  Volume / Brightness
 
 
   '';
@@ -140,6 +144,7 @@ let
   '';  
 in
 {
+
    # Make all our scripts and new packages available
   home.packages = with pkgs; [
     # ... your other packages
@@ -161,7 +166,8 @@ in
     # New dependencies
     jq
   ];
-  # --- ADD THE WAYBAR CONFIGURATION +++
+
+ 
   programs.waybar = {
     enable = true;
     # Tell Waybar where to find its stylesheet
@@ -171,7 +177,7 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        height = 40;
+        height = 30;
         modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
         modules-center = [ "clock" ];
         modules-right = [ "tray" "pulseaudio" "network" "cpu" "memory" "custom/power"];
@@ -185,6 +191,11 @@ in
             "3" = "3";
             "4" = "4";
             "5" = "5";
+            "6" = "6";
+            "7" = "7";
+            "8" = "8";
+            "9" = "9";
+            "0" = "0";
             "default" = "";
           };
         };
@@ -205,13 +216,13 @@ in
 
         
         "clock" = {
-          format = "  {:%a %d %b %H:%M} ";
+          format = "   {:%a %d %b %H:%M} ";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
 
         "pulseaudio" = {
-          format = "{icon} {volume}%";
-          format-muted = " Muted";
+          format = " {icon} {volume}% ";
+          format-muted = "  Muted ";
           format-icons = {
             default = [ "  " "   " ];
           };
@@ -267,11 +278,11 @@ in
           color: ${colors.background};
           border-color: ${colors.primary};
       }
-      lock { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
-      logout { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/logout.png"); }
-      suspend { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/suspend.png"); }
-      reboot { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
-      shutdown { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
+      #lock { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
+      #logout { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/logout.png"); }
+      #suspend { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/suspend.png"); }
+      #reboot { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
+      #shutdown { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
     '';
   };
 
@@ -304,10 +315,10 @@ in
       };
 
       general = {
-        gaps_in = 10;
+        gaps_in = 5;
         gaps_out = 5;
         border_size = 2;
-        "col.active_border" = "rgb(fabd2f)";
+        "col.active_border" = "rgb(78BCF0)";
         "col.inactive_border" = "rgb(504945)";
         layout = "dwindle";
       };
@@ -315,7 +326,14 @@ in
       # --- DECORATION AND ANIMATION ---
       decoration = {
         rounding = 10;
-        blur.enabled = true;
+        blur = {
+            enabled = true;          # This is the most important line!
+            size = 8;                # How strong the blur is. Higher is more blurry.
+            passes = 3;              # More passes can look smoother but use more GPU. 2-4 is a good range.
+            new_optimizations = true; # Use newer, more efficient blur algorithms.
+            ignore_opacity = true;   # Recommended to ensure blur works correctly with transparent windows.
+            xray = false;            # Set to `true` to see through all windows behind the active one. Can be disorienting.
+          };      
       };
 
       animations = {
@@ -342,6 +360,7 @@ in
         # -- Apps & Core Window Management --
         "${mainMod}, RETURN, exec, ${myTerminal}"
         "${mainMod}, H, exec, ${myTerminal} -e htop"
+        "${mainMod}, E, exec, dolphin" # <-- ADD THIS LINE
         "${mainMod} SHIFT, Q, killactive,"
         "${mainMod}, D, exec, wofi --show drun"
         "${mainMod}, V, togglefloating,"
@@ -419,11 +438,14 @@ in
 
       # --- WINDOW RULES ---
       windowrulev2 = [
+        "opacity 0.92 0.85, class:(.*)"
         "workspace 2, class:^(firefox)$"
         "workspace 3, class:^(Code)$" # Note: VSCode class is often capitalized
         "float, class:^(Pavucontrol)$"
         "float, class:^(blueman-manager)$"
         "float, title:^(alsamixer)$"
+        "float, class:^(thunar)$" # 
+        "float, class:^(dolphin)$" # <-- ADD THIS LINE
       ];
     };
   };

@@ -8,7 +8,8 @@
         zellij = {
             enable = true;
             settings = {
-                    theme = "Catppuccin Latte";
+                    #theme = "Catppuccin Latte";
+                    theme = "cyber noid";
                     default_shell = "nu";
 
             };

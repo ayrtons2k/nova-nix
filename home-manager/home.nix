@@ -27,6 +27,7 @@
   };  
 
   programs.home-manager.enable = true;
+ services.gnome-keyring.enable = true;
 
   home = {
     username = "ayrton";

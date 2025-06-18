@@ -105,6 +105,7 @@ in
       };
     };
 
+    gnome.gnome-keyring.enable = true;
     openssh.enable = true;
 
     pulseaudio.enable = false;
@@ -265,17 +266,15 @@ in
     ];
   };
 
-  # Firefox and Git
   
-  security.rtkit.enable = true;
-
-  security.pam.services.swaylock = {
-    text = "auth include login";
+  security = {
+    rtkit.enable = true;
+    pam.services.sddm.enableGnomeKeyring = true;
+    pam.services.swaylock = {
+      text = "auth include login";
+    };  
   };
-  # System packages
-  
-  
-  
+
   
   environment = {
     #Variables used by Hyprland
@@ -302,7 +301,13 @@ in
       wl-clipboard # Provides wl-copy/wl-paste for the command line
       hyprpaper # Wallpaper daemon for Hyprland
       hyprlock # The native screen locker
+      kdePackages.qtsvg
+      kdePackages.dolphin
     ];
+  };
+
+   programs.thunar = {
+    enable = true;
   };
 
 
