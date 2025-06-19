@@ -1,4 +1,4 @@
-{ pkgs, options,... }:
+{ pkgs, config, inputs, options,... }:
 let
   myTerminal = "alacritty";
   myUser = "ayrton";
@@ -18,42 +18,6 @@ let
 
   # Set the font for the entire system
   font = "JetBrainsMono Nerd Font";
-
- power-menu-script = pkgs.writeShellScriptBin "power-menu" ''
-    #!${pkgs.stdenv.shell}
-
-    # Define the options with Nerd Font icons
-    options=
-      " Lock
-        Logout
-        Suspend
-        Reboot
-        Shutdown"
-
-    # Show the menu with wofi, using the explicit Nix store path for wofi
-    # This makes the script much more reliable.
-    selected=$(${pkgs.lib.getExe pkgs.wofi} --show dmenu -p "Power Menu" --style ~/.config/wofi/powermenu.css --width=250 --height=300 <<< "$options")
-
-    # Execute the selected action using explicit paths for all commands
-    case "$selected" in
-        " Lock")
-            ${pkgs.lib.getExe pkgs.hyprlock}
-            ;;
-        " Logout")
-            ${pkgs.lib.getExe pkgs.hyprland} dispatch exit
-            ;;
-        " Suspend")
-            ${pkgs.lib.getExe pkgs.systemd}/bin/systemctl suspend
-            ;;
-        " Reboot")
-            ${pkgs.lib.getExe pkgs.systemd}/bin/systemctl reboot
-            ;;
-        " Shutdown")
-            ${pkgs.lib.getExe pkgs.systemd}/bin/systemctl shutdown now
-            ;;
-    esac
-  '';
-
 
   hyprland-bar-wrapper = pkgs.writeShellScriptBin "hyprland-bar-wrapper" ''
     #!${pkgs.stdenv.shell}
@@ -95,7 +59,7 @@ let
     -- APPS & CORE --
       SUPER + RETURN                Launch Terminal
       SUPER + H                     Launch htop
-      SUPER + D                     App Launcher (wofi)
+      SUPER + R                     App Launcher 
       SHIFT + Q                     Close active window
       SUPER + V                     Toggle floating
       SUPER + F                     Toggle fullscreen
@@ -148,8 +112,8 @@ in
    # Make all our scripts and new packages available
   home.packages = with pkgs; [
     # ... your other packages
-    power-menu-script 
     wlogout # The graphical logout menu from the screenshot
+    wleave
     hyprpicker
     # Utilities
     grim 
@@ -229,8 +193,8 @@ in
         };
 
         "network" = {
-          format-wifi = "   {essid} ";
-          format-ethernet = " 󰈀 {ifname} ";
+          format-wifi = "   {ipaddr} ";
+          format-ethernet = " 󰈀 {ipaddr} ";
           format-disconnected = " Disconnected ";
         };
         
@@ -246,45 +210,123 @@ in
   };
 
 
-   programs.wlogout = {
-    enable = true;
-    layout = [
-      { label = "lock"; action = "hyprlock"; }
-      { label = "logout"; action = "hyprctl dispatch exit"; }
-      { label = "suspend"; action = "systemctl suspend"; }
-      { label = "reboot"; action = "systemctl reboot"; }
-      { label = "shutdown"; action = "systemctl shutdown now"; }
-    ];
-    style = ''
+    xdg.configFile."wofi/style.css".text = ''
+    window {
+        margin: 0px;
+        border: 2px solid #bd93f9; /* Dracula Purple */
+        background-color: #282a36; /* Dracula Background */
+        border-radius: 5px;
+    }
+
+    #input {
+        margin: 5px;
+        border: none;
+        color: #f8f8f2; /* Dracula Foreground */
+        background-color: #44475a; /* Dracula Current Line */
+        border-radius: 3px;
+    }
+
+    #inner-box {
+        margin: 5px;
+        border: none;
+        background-color: #282a36; /* Dracula Background */
+    }
+
+    #outer-box {
+        margin: 5px;
+        border: none;
+        background-color: #282a36; /* Dracula Background */
+    }
+
+    #scroll {
+        margin: 0px;
+        border: none;
+    }
+
+    #text {
+        margin: 5px;
+        border: none;
+        color: #f8f8f2; /* Dracula Foreground */
+    }
+
+    #entry:selected {
+        background-color: #44475a; /* Dracula Current Line */
+        outline: none;
+    }
+  '';
+
+    # wlogout configuration (example layout)
+    programs.wlogout = {
+      enable = true;
+      layout = [
+        {
+          label = "lock";
+          action = "${pkgs.hyprlock}/bin/hyprlock";
+          keybind = "l";
+        }
+        {
+          label = "logout";
+          action = "hyprctl dispatch exit";
+          keybind = "e";
+        }
+        {
+          label = "suspend";
+          action = "systemctl suspend";
+          keybind = "s";
+        }
+        {
+          label = "hibernate";
+          action = "systemctl hibernate";
+          keybind = "h";
+        }
+        {
+          label = "reboot";
+          action = "systemctl reboot";
+          keybind = "r";
+        }
+        {
+          label = "shutdown";
+          action = "systemctl poweroff";
+          keybind = "p";
+        }
+      ];
+      style = ''
       * {
-          background-image: none;
-          font-family: ${font};
+        font-family: "JetBrainsMono Nerd Font";
+        background-image: none;
+        transition: 0.1s;
       }
       window {
-          background-color: rgba(24, 25, 38, 0.8);
+        background-color: rgba(30, 30, 46, 0.8); /* Catppuccin Base */
       }
       button {
-          color: ${colors.foreground};
-          background-color: ${colors.background};
-          border-style: solid;
-          border-width: 2px;
-          border-color: ${colors.black};
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 25%;k
+        color: #cdd6f4; /* Catppuccin Text */
+        background-color: rgba(49, 50, 68, 0.8); /* Catppuccin Surface0 */
+        border: 2px solid #313244; /* Catppuccin Surface0 darker for border */
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 25%;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 10px;
       }
       button:focus, button:active, button:hover {
-          background-color: ${colors.primary};
-          color: ${colors.background};
-          border-color: ${colors.primary};
+        background-color: #45475a; /* Catppuccin Surface1 */
+        border: 2px solid #585b70; /* Catppuccin Surface2 */
       }
-      #lock { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
-      #logout { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/logout.png"); }
-      #suspend { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/suspend.png"); }
-      #reboot { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
-      #shutdown { background-image: image(url: "${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
-    '';
-  };
+      #lock { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png")); }
+      #logout { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png")); }
+      #suspend { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/suspend.png")); }
+      #hibernate { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png")); }
+      #shutdown { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png")); }
+      #reboot { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png")); }
+      '';
+    };
+
+    # xdg.configFile."wlogout/layout".text = builtins.toJSON config.programs.wlogout.layout;
+    # xdg.configFile."wlogout/style.css".text = config.programs.wlogout.style;
+
+  
 
   # The Home Manager module for Hyprland
   wayland.windowManager.hyprland = {
@@ -300,6 +342,7 @@ in
       monitor = "DP-2, 5120x1440@120, 0x0, 1";
       "exec-once" = [
         "hyprpaper -c ~/.config/hypr/hyprpaper.conf"
+        "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet"
         "blueman-applet"
         "kdeconnect-indicator"
@@ -312,6 +355,9 @@ in
         follow_mouse = 1;
         accel_profile = "flat";
         touchpad.natural_scroll = true;
+        #  cursor = {
+        #   inactive_timeout = 0; # A timeout of 0 disables hiding the cursor
+        # };
       };
 
       general = {
@@ -320,7 +366,9 @@ in
         border_size = 2;
         "col.active_border" = "rgb(78BCF0)";
         "col.inactive_border" = "rgb(504945)";
+        #layout = "master";
         layout = "dwindle";
+        #cursor_inactive_timeout = 0;
       };
 
       # --- DECORATION AND ANIMATION ---
@@ -362,7 +410,7 @@ in
         "${mainMod}, H, exec, ${myTerminal} -e htop"
         "${mainMod}, E, exec, dolphin" # <-- ADD THIS LINE
         "${mainMod} SHIFT, Q, killactive,"
-        "${mainMod}, D, exec, wofi --show drun"
+        "${mainMod}, R, exec, wofi --show drun"
         "${mainMod}, V, togglefloating,"
         "${mainMod}, F, fullscreen,"
 
@@ -424,7 +472,7 @@ in
         "${mainMod}, mouse_up, workspace, e-1"
 
         # -- System, Session & Media --
-        "${mainMod} SHIFT, X, exec, power-menu"
+        "${mainMod} SHIFT, X, exec, wlogout"
         "${mainMod} SHIFT, L, exec, hyprlock"
         "${mainMod} SHIFT, C, exec, hyprctl reload"
         "${mainMod} SHIFT, E, exit,"
@@ -449,5 +497,11 @@ in
       ];
     };
   };
-  home.file.".config/hypr/hyprpaper.conf".source = ./../config/hyprpaper.conf;  
-}
+home.file.".config/hypr/hyprpaper.conf" = {
+    # The `text` attribute allows us to use Nix string interpolation.
+    text = ''
+      preload = ${../../wallpapers/hyprlnd-nova-nix.png}
+      splash = true
+      wallpaper = DP-2, ${../../wallpapers/hyprlnd-nova-nix.png}
+    '';
+  };}
