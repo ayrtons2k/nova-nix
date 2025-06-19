@@ -27,7 +27,7 @@
   };  
 
   programs.home-manager.enable = true;
- services.gnome-keyring.enable = true;
+  services.gnome-keyring.enable = true;
 
   home = {
     username = "ayrton";
@@ -73,7 +73,7 @@
       libimobiledevice
       ifuse
       vscode
-      i3status-rust
+      pkgs.gnome-keyring
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);

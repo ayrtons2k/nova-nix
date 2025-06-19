@@ -1,3 +1,7 @@
+#040404
+
+
+
 # package definition
 # https://github.comsrid/nixos-config/tree/master/home
 #
