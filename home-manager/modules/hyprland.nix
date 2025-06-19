@@ -342,7 +342,7 @@ in
       mainMod = "SUPER";
     in {
       # --- MONITOR AND STARTUP ---
-      monitor = "DP-2, 5120x1440@120, 0x0, 1.0666667";
+      monitor = "DP-2, 5120x1440@120, 0x0, 1";
       "exec-once" = [
         "hyprpaper -c ~/.config/hypr/hyprpaper.conf"
         "hyprctl setcursor Bibata-Modern-Classic 24"
