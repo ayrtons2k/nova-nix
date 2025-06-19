@@ -52,52 +52,51 @@ let
 
   # --- ++ NEW ++ : Keybinding Cheat Sheet Generation ---
   keybind-hints = ''
-     # --- Keybinding Cheat Sheet Generation ---
-  # This has been updated to reflect all current bindings.
     HYPRLAND KEYBINDINGS (MOD = SUPER)
 
     -- APPS & CORE --
-      SUPER + RETURN                Launch Terminal
-      SUPER + H                     Launch htop
-      SUPER + R                     App Launcher 
-      SHIFT + Q                     Close active window
-      SUPER + V                     Toggle floating
-      SUPER + F                     Toggle fullscreen
+ 
+      ❖ + RETURN                Launch Terminal
+      ❖ + H                     Launch htop
+      ❖ + R                     App Launcher 
+      SHIFT + Q                 Close active window
+      ❖ + V                     Toggle floating
+      ❖ + F                     Toggle fullscreen
 
     -- FOCUS & MOVEMENT --
-      SUPER + Arrows                Move focus
-      SUPER + SHIFT + Arrows        Swap/Move window
-      SUPER + CTRL + Arrows         Resize window
+      ❖ + Arrows                Move focus
+      ❖ + SHIFT + Arrows        Swap/Move window
+      ❖ + CTRL + Arrows         Resize window
 
     -- LAYOUT & GROUPS --
-      SUPER + J                     Toggle layout split (v/h)
-      SUPER + G                     Toggle window grouping
-      SUPER + Tab                   Cycle focus in a group
+      ❖ + J                     Toggle layout split (v/h)
+      ❖ + G                     Toggle window grouping
+      ❖ + Tab                   Cycle focus in a group
 
     -- UTILITIES --
-      SUPER + X                     Show Power Menu
-      SUPER + K                     Show this cheat sheet
-      SUPER + B                     Toggle Waybar visibility
-      SUPER + P                     Color Picker (copy hex)
-      Print Screen                  Screenshot region
-      SUPER + Print                 Screenshot fullscreen
-      SUPER + SHIFT + Print         Screenshot active window
+      ❖ + X                     Show Power Menu
+      ❖ + K                     Show this cheat sheet
+      ❖ + B                     Toggle Waybar visibility
+      ❖ + P                     Color Picker (copy hex)
+      Print Screen              Screenshot region
+      ❖ + Print                 Screenshot fullscreen
+      ❖ + SHIFT + Print         Screenshot active window
 
     -- EYE CANDY --
-      SUPER + CTRL + B              Toggle background blur
+      ❖ + CTRL + B              Toggle background blur
 
     -- WORKSPACES --
-      SUPER + 1-0                   Switch to workspace
-      SUPER + SHIFT + 1-0           Move window to workspace
-      SUPER + Mouse Wheel           Cycle workspaces
+      ❖ + 1-0                   Switch to workspace
+      ❖ + SHIFT + 1-0           Move window to workspace
+      ❖ + Mouse Wheel           Cycle workspaces
 
     -- SESSION & SYSTEM --
-      SUPER + SHIFT + X             Power menu
-      SUPER + SHIFT + L             Lock screen (hyprlock)
-      SUPER + SHIFT + C             Reload Hyprland config
-      SUPER + SHIFT + E             Exit Hyprland session
-      SUPER + SHIFT + S             Suspend System
-      (Media Keys)                  Volume / Brightness
+      ❖ + SHIFT + X             Power menu
+      ❖ + SHIFT + L             Lock screen (hyprlock)
+      ❖ + SHIFT + C             Reload Hyprland config
+      ❖ + SHIFT + E             Exit Hyprland session
+      ❖ + SHIFT + S             Suspend System
+      (Media Keys)               Volume / Brightness
 
 
   '';
@@ -314,14 +313,18 @@ in
         background-color: #45475a; /* Catppuccin Surface1 */
         border: 2px solid #585b70; /* Catppuccin Surface2 */
       }
-      #lock { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png")); }
+
+      #lock { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png")); } 
       #logout { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png")); }
       #suspend { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/suspend.png")); }
       #hibernate { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png")); }
       #shutdown { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png")); }
-      #reboot { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png")); }
+      #reboot { background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png")); }     
+
+      
       '';
     };
+
 
     # xdg.configFile."wlogout/layout".text = builtins.toJSON config.programs.wlogout.layout;
     # xdg.configFile."wlogout/style.css".text = config.programs.wlogout.style;
