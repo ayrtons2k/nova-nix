@@ -59,6 +59,7 @@
       extraConfig = ''
 
         def nrsu [] {^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix" --upgrade }        
+        def nrst [] {^sudo nixos-rebuild test --flake $"($env.HOME)/nova-nix-config#nova-nix"}
         
         
         clear # Clears screen on new shell, personal preference
