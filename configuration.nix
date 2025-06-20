@@ -103,8 +103,11 @@ in
           Session = "hyprland.desktop";
         };
       };
-    };
 
+      
+    };
+    
+  
     gnome.gnome-keyring.enable = true;
     openssh.enable = true;
 
@@ -274,9 +277,26 @@ in
     pam.services.swaylock = {
       text = "auth include login";
     };  
-  };
 
-  
+    pam = {
+      u2f = {
+        enable = true;
+        control = "sufficient"; # This means the key is SUFFICIENT for auth.
+        settings = {
+          cue = true;             # Prints "Please touch the device."
+          authFile = "/home/ayrton/.config/Yubico/u2f_keys"; # Path to your Yubikey key file};
+        };
+      };
+      services =  {
+    # This enables U2F/Passkey authentication for the 'sudo' service
+        login.u2fAuth = true;
+        sudo.u2fAuth = true;
+        u2f.enable = true;
+      };      
+    };
+  };
+ 
+  services.udev.packages = [ pkgs.libu2f-host ];
   environment = {
     #Variables used by Hyprland
     sessionVariables = {
@@ -304,6 +324,7 @@ in
       hyprlock # The native screen locker
       kdePackages.qtsvg
       kdePackages.dolphin
+      pam_u2f
     ];
   };
 
