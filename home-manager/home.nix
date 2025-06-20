@@ -74,6 +74,7 @@
       ifuse
       vscode
       pkgs.gnome-keyring
+      aichat
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);
