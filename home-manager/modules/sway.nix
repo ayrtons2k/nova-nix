@@ -51,6 +51,7 @@ in
 
       keybindings = {
         # Window & App Management
+        "${modifier}+Return" = "exec ${myTerminal}";
         "${modifier}+Shift+q" = "kill";
         "${modifier}+d" = "exec wofi --show drun";
         "${modifier}+Shift+l" = "exec swaylock -f -c 000000";

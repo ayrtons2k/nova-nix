@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./modules/sway.nix
+    ./modules/hyprland.nix
     ./modules/vscode.nix
     ./modules/nushell.nix
     ./modules/starship.nix
@@ -27,6 +27,7 @@
   };  
 
   programs.home-manager.enable = true;
+  services.gnome-keyring.enable = true;
 
   home = {
     username = "ayrton";
@@ -39,6 +40,8 @@
       alacritty
       bat
       fzf
+      eza
+      zoxide
       ripgrep
       gitAndTools.git-lfs
       gitAndTools.gh
@@ -70,6 +73,8 @@
       libimobiledevice
       ifuse
       vscode
+      pkgs.gnome-keyring
+      aichat
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);

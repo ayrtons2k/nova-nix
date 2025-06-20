@@ -39,29 +39,29 @@
         elstlale = "elstla --level";
         elstle = "elst --level";
         cat = "bat";
+        cd = "z";
         "cd.." = "cd ..";
         man = "navi"; # Consider if Carapace should handle navi completions or if navi has its own.
         cls = "clear";
         "core-cd" = "cd"; # Nushell's built-in cd
-        cd = "z";         # zoxide for cd
         cdi = "zi";       # zoxide interactive
         ns = "nvidia-smi";
         cc = "xclip -selection clipboard";
         cv = "xclip -selection clipboard -o";
         pbcopy = "cc";
         pbpaste = "cv";
-        hms = "home-manager switch --flake .#ayrton@nova-nix"; # Assuming your HM user/host
-        # nrs = """sudo nixos-rebuild switch --flake "($env.HOME)/nova-nix-config#nova-nix"""; # Ensure flake path and host are correct
-        # nrsu = """sudo nixos-rebuild switch --flake $env.HOME/nova-nix-config#nova-nix --upgrade"; # Ensure flake path and host are correct
         nsp = "nix-shell -p ";
         nspi = "nix-shell -p inkscape";
         nspc = "nix-shell -p google-chrome";
         aliases = "scope aliases";
-
-        
       };
 
       extraConfig = ''
+
+        def nrsu [] {^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix" --upgrade }        
+        def nrst [] {^sudo nixos-rebuild test --flake $"($env.HOME)/nova-nix-config#nova-nix"}
+        
+        
         clear # Clears screen on new shell, personal preference
 
         # $env.NIXPKGS_ALLOW_UNFREE = 1 # Moved to environmentVariables
@@ -91,18 +91,13 @@
           uniq # Ensure no duplicate paths
         )
 
-      def nrsu [] {
-      ∙     ^sudo nixos-rebuild switch --flake $"($env.HOME)/nova-nix-config#nova-nix" --upgrade
-      ∙ }      
-
-
-
         # Example of how zoxide integration is typically handled by its Nushell support
         # The line `zoxide init nushell | save -f ~/.zoxide.nu` is not needed here
         # because `programs.zoxide.enableNushellIntegration = true;` handles it.
         # If zoxide isn't working, ensure its init script is correctly sourced by Nushell.
         # The Home Manager module should place something like:
-        #   source ($env.HOME | path join ".local/share/zoxide/zoxide.nu")
+        #source ($env.HOME | path join ".local/share/zoxide/zoxide.nu")
+        source ~/.zoxide.nu
         # or similar, into Nushell's startup files.
 
         # SSH Agent part (remains commented as per your original)
