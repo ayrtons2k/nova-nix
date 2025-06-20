@@ -21,13 +21,17 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
+  ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
+  #breaks hyprland scaling (I KID YOU NOT!)
+  #=======================================================
   services.xserver.videoDrivers = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
-  # 3. Enable hardware acceleration
+  #boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
   hardware.opengl = {
     enable = true;
     driSupport32Bit = true;
   };
+  #=======================================================
+    ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
 
   hardware = {
     nvidia = {
@@ -88,6 +92,7 @@ in
 
   # Bootloader
   boot = {
+    extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
     loader = {
       systemd-boot = {
         enable = true;
@@ -99,7 +104,6 @@ in
     kernelPackages = pkgs.linuxPackages_6_12;
     kernelParams = [
       "nvidia_drm.modeset=1"
-      "video=DP-2:5120x1440@120eD"
     ];    
   };
 
@@ -108,14 +112,26 @@ in
       enable = true;
       wayland.enable = true;
       
-      settings = {
-        Autologin = {
-          Session = "hyprland.desktop";
+      # settings = {
+      #   Autologin = {
+      #     Session = "hyprland.desktop";
+      #   };
+      # };
+      sugarCandyNix = {
+       enable = true;
+        # Point this to your actual wallpaper path
+        settings = {
+          # Set your configuration options here.
+          # Here is a simple example:
+          #Background = lib.cleanSource ./background.png;
+          ScreenWidth = 5120;
+          ScreenHeight = 1440;
+          FormPosition = "left";
+          HaveFormBackground = true;
+          PartialBlur = true;
         };
       };
-
-      
-    };
+    };  
     
   
     gnome.gnome-keyring.enable = true;

@@ -342,7 +342,21 @@ in
       mainMod = "SUPER";
     in {
       # --- MONITOR AND STARTUP ---
-      monitor = "DP-2, 5120x1440@120, 0x0, 1.10";
+        /* 
+      Fractional Scale	Decimal Value for hyprland.conf	Resulting Logical Resolution between 1 and 2 for a 5120px monitor
+          16 / 15	1.066667	4800 x 1350
+          10 / 9	1.111111	4608 x 1296
+          8 / 7	  1.142857	4480 x 1260
+          5 / 4	  1.25	    4096 x 1152
+          4 / 3	  1.333333	3840 x 1080
+          10 / 7	1.428571	3584 x 1008
+          8 / 5	  1.6	3200 x 900
+          5 / 3	  1.666667	3072 x 864
+          2 / 1	  2.0	2560 x 720
+
+        */
+
+      monitor = "DP-2, 5120x1440@120, 0x0, 1";
       "exec-once" = [
         "hyprpaper -c ~/.config/hypr/hyprpaper.conf"
         "hyprctl setcursor Bibata-Modern-Classic 24"
