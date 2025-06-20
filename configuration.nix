@@ -21,6 +21,14 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
+  services.xserver.videoDrivers = [ "nvidia" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
+  # 3. Enable hardware acceleration
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+  };
+
   hardware = {
     nvidia = {
       modesetting.enable = true;
@@ -28,9 +36,9 @@ in
       powerManagement.finegrained = false;
       open = false;  # Use proprietary drivers
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      #package = config.boot.kernelPackages.nvidiaPackages.beta;
       #package = config.boot.kernelPackages.nvidiaPackages.latest;
-      #package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
       #package = config.boot.kernelPackages.nvidiaPackages.production;
     };
 
@@ -59,6 +67,8 @@ in
       ];
     };
   };
+
+
  
   nixpkgs.config = {
     allowUnfree = true;
