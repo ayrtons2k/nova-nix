@@ -292,7 +292,7 @@ in
         login.u2fAuth = true;
         sudo.u2fAuth = true;
         u2f.enable = true;
-      };      
+      };       
     };
   };
  
