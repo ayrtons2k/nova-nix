@@ -58,7 +58,7 @@ let
     #!${pkgs.stdenv.shell}
     # Wait 2 seconds for the system to settle before applying monitor config
     sleep 2
-    ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-2, 5120x1440@120, 0x0, 1.142857"
+    ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-2, 5120x1440@120, 0x0, 1.0"
   '';
 
 
@@ -385,9 +385,9 @@ in
         "kdeconnect-indicator"
         "waybar"
         "exec-once = wl-paste --watch cliphist store"
-         "setup-monitor"
+        #"setup-monitor"
         #"dbus-update-activation-environment --systemd --all"
-         #"/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh" 
+         "/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh" 
       ];
 
 
