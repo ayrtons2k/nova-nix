@@ -10,29 +10,30 @@
     ./modules/zellij.nix
     #./modules/rust.nix
   ];
-  xsession = {
-    enable = true;
-    # windowManager = {
-    #   i3 = {
-    #     enable = true;
-    #     package = pkgs.i3-gaps;        
-    #     extraConfig = ''
-    #       # Set the default terminal emulator
-    #       exec_always --no-startup-id alacritty
-    #     '';
-    #   };
-    # };
-
-
-  };  
 
   programs.home-manager.enable = true;
   services.gnome-keyring.enable = true;
+
+
+  xdg.portal = {
+    enable = true;
+    # On NixOS, you might prefer to set this in configuration.nix
+    # but setting it here is also fine.
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    # This sets Hyprland as the default handler for portal requests
+    config.common.default = "*";     
+  };
 
   home = {
     username = "ayrton";
     homeDirectory = "/home/ayrton";
     stateVersion = "25.05";
+
+
+    
 
     packages = with pkgs; [
       gnupg
@@ -75,6 +76,8 @@
       vscode
       pkgs.gnome-keyring
       aichat
+      pkgs.cliphist
+      pkgs.wl-clipboard       
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);

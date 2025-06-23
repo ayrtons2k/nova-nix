@@ -15,6 +15,10 @@ let
     green = "rgb(b8bb26)";
     blue = "rgb(83a598)";
   };
+  #valid Scales that work for me
+  scaleOneFourteen = "1.142857";
+  ScaleOneTwentyFive = "1.25";
+  scaleOne = "1.0";
 
   # Set the font for the entire system
   font = "JetBrainsMono Nerd Font";
@@ -49,6 +53,14 @@ let
     pkill -SIGUSR1 waybar
   '';
 
+  #Script to apply monitor settings after a delay to help. Fix to scaling not being applied correctly 
+  setup-monitor-script = pkgs.writeShellScriptBin "setup-monitor" ''
+    #!${pkgs.stdenv.shell}
+    # Wait 2 seconds for the system to settle before applying monitor config
+    sleep 2
+    ${pkgs.hyprland}/bin/hyprctl keyword monitor "DP-2, 5120x1440@120, 0x0, 1.142857"
+  '';
+
 
   # --- ++ NEW ++ : Keybinding Cheat Sheet Generation ---
   keybind-hints = ''
@@ -81,6 +93,8 @@ let
       Print Screen              Screenshot region
       ❖ + Print                 Screenshot fullscreen
       ❖ + SHIFT + Print         Screenshot active window
+      ❖ + CTRL + V              Screenshot active window
+
 
     -- EYE CANDY --
       ❖ + CTRL + B              Toggle background blur
@@ -107,7 +121,6 @@ let
   '';  
 in
 {
-
    # Make all our scripts and new packages available
   home.packages = with pkgs; [
     # ... your other packages
@@ -126,11 +139,19 @@ in
     screenshot_win
     toggle_bar
     keybind-script
-    # New dependencies
+    hyprcursor
+    setup-monitor-script    
     jq
   ];
 
- 
+  # hyprcursor = {
+  #   enable = true;
+  #   theme = "rose-pine-hyprcursor";
+  # };
+
+  # cursor.package = inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default;
+  # cursor.name = "BreezX-RosePine-Linux";
+
   programs.waybar = {
     enable = true;
     # Tell Waybar where to find its stylesheet
@@ -142,8 +163,8 @@ in
         position = "top";
         height = 30;
         modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
-        modules-center = [ "clock" ];
-        modules-right = [ "tray" "pulseaudio" "network" "cpu" "memory" "custom/power"];
+        modules-center = [ "network" "cpu" "memory" ];
+        modules-right = [ "tray" "pulseaudio" "clock" "custom/power"];
 
         # Module-specific settings
         "hyprland/workspaces" = {
@@ -344,27 +365,32 @@ in
       # --- MONITOR AND STARTUP ---
         /* 
       Fractional Scale	Decimal Value for hyprland.conf	Resulting Logical Resolution between 1 and 2 for a 5120px monitor
-          16 / 15	1.066667	4800 x 1350
-          10 / 9	1.111111	4608 x 1296
-          8 / 7	  1.142857	4480 x 1260
-          5 / 4	  1.25	    4096 x 1152
-          4 / 3	  1.333333	3840 x 1080
-          10 / 7	1.428571	3584 x 1008
-          8 / 5	  1.6	3200 x 900
-          5 / 3	  1.666667	3072 x 864
-          2 / 1	  2.0	2560 x 720
+          16/15	1.066667	4800 x 1350
+          10/9	1.111111	4608 x 1296
+           8/7  1.142857	4480 x 1260
+           5/4  1.25	    4096 x 1152
+           4/3  1.333333	3840 x 1080
+          10/7	1.428571	3584 x 1008
+           8/5  1.6	3200 x 900
+           5/3  1.666667	3072 x 864
+           2/1  2.0	2560 x 720
 
         */
 
-      monitor = "DP-2, 5120x1440@120, 0x0, 1";
       "exec-once" = [
-        "hyprpaper -c ~/.config/hypr/hyprpaper.conf"
+        "hyprpaper -c ~/.config/hypr/hyprpaper.conf" 
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet"
         "blueman-applet"
         "kdeconnect-indicator"
         "waybar"
+        "exec-once = wl-paste --watch cliphist store"
+         "setup-monitor"
+        #"dbus-update-activation-environment --systemd --all"
+         #"/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh" 
       ];
+
+
 
       # --- INPUT AND GENERAL ---
       input = {
@@ -392,12 +418,12 @@ in
       decoration = {
         rounding = 10;
         blur = {
-            enabled = true;          # This is the most important line!
-            size = 8;                # How strong the blur is. Higher is more blurry.
-            passes = 3;              # More passes can look smoother but use more GPU. 2-4 is a good range.
+            enabled = true;          
+            size = 8;                 # How strong the blur is. Higher is more blurry.
+            passes = 3;               # More passes can look smoother but use more GPU. 2-4 is a good range.
             new_optimizations = true; # Use newer, more efficient blur algorithms.
-            ignore_opacity = true;   # Recommended to ensure blur works correctly with transparent windows.
-            xray = false;            # Set to `true` to see through all windows behind the active one. Can be disorienting.
+            ignore_opacity = true;    # Recommended to ensure blur works correctly with transparent windows.
+            xray = false;             # Set to `true` to see through all windows behind the active one. Can be disorienting.
           };      
       };
 
@@ -459,9 +485,10 @@ in
         ", Print, exec, screenshot-region"
         "${mainMod}, Print, exec, screenshot-full"
         "${mainMod} SHIFT, Print, exec, screenshot-win"
+        "${mainMod} CTRL, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
 
         # -- Eye Candy --
-        "${mainMod} CONTROL, B, exec, bash -c 'hyprctl keyword decoration:blur:enabled toggle'" # <-- FIX: Wrapped command in bash -c
+        "${mainMod} CTRL, B, exec, bash -c 'hyprctl keyword decoration:blur:enabled toggle'" # <-- FIX: Wrapped command in bash -c
 
         # -- Workspace Management --
         # (Your workspace bindings are all correct)
@@ -503,7 +530,7 @@ in
 
       # --- WINDOW RULES ---
       windowrulev2 = [
-        "opacity 0.92 0.85, class:(.*)"
+        "opacity 0.85 0.70, class:(.*)"
         "workspace 2, class:^(firefox)$"
         "workspace 3, class:^(Code)$" # Note: VSCode class is often capitalized
         "float, class:^(Pavucontrol)$"
@@ -512,6 +539,7 @@ in
         "float, class:^(thunar)$" # 
         "float, class:^(dolphin)$" # <-- ADD THIS LINE
       ];
+      monitor = "DP-2, 5120x1440@120, 0x0, 1.0";
     };
   };
 home.file.".config/hypr/hyprpaper.conf" = {

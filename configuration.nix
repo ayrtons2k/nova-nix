@@ -12,7 +12,7 @@ let
 in
 {
   #--- LABEL ----------------------------------------------------------------
-  system.nixos.label = "flake-gen-4-hyprland";
+  system.nixos.label = "flake-gen-5-yubi";
   #--------------------------------------------------------------------------
   
   imports = [ 
@@ -21,17 +21,8 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-  ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
-  #breaks hyprland scaling (I KID YOU NOT!)
-  #=======================================================
   services.xserver.videoDrivers = [ "nvidia" ];
   #boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
-  #=======================================================
-    ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
 
   hardware = {
     nvidia = {
@@ -72,8 +63,30 @@ in
     };
   };
 
+  # In your configuration.nix
 
- 
+  # This is the correct way to define the service inside configuration.nix
+  systemd.user.services.cliphist-daemon = {
+    # 'Unit' options are now top-level
+    description = "Clipboard History Daemon (cliphist)";
+    after = [ "graphical-session-pre.target" ];
+    partOf = [ "graphical-session.target" ];
+
+    # 'Install' options are now top-level
+    wantedBy = [ "graphical-session.target" ];
+
+    # 'Service' options go into the 'serviceConfig' block,
+    # and the main command goes in the 'script'.
+    script = ''
+      # The script block gives us a clean shell to run our command
+      ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store
+    '';
+
+    serviceConfig = {
+      Restart = "on-failure";
+    };
+  }; 
+
   nixpkgs.config = {
     allowUnfree = true;
     config = {
@@ -288,36 +301,60 @@ in
   # User configuration
   users.users.ayrton = {
     isNormalUser = true;
-    description = "ayrton";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
+    description  = "ayrton";
+    extraGroups  = [ "networkmanager" "wheel" ];
+    packages     = with pkgs; [
       kdePackages.kate
       git
     ];
   };
-
-  
+  # This enables the daemon that talks to the YubiKey hardware
+  services.pcscd.enable = true;
   security = {
     rtkit.enable = true;
-    pam.services.sddm.enableGnomeKeyring = true;
-    pam.services.swaylock = {
-      text = "auth include login";
-    };  
 
     pam = {
       u2f = {
         enable = true;
-        control = "sufficient"; # This means the key is SUFFICIENT for auth.
+        control = "sufficient";                              # This means the key is SUFFICIENT for auth not true 2 factor.
         settings = {
-          cue = true;             # Prints "Please touch the device."
-          authFile = "/home/ayrton/.config/Yubico/u2f_keys"; # Path to your Yubikey key file};
+          cue = true;                                        # Prints "Please touch the device."
+          authFile = "/home/ayrton/.config/Yubico/u2f_keys"; # Path to Yubikey key file
         };
       };
       services =  {
-    # This enables U2F/Passkey authentication for the 'sudo' service
-        login.u2fAuth = true;
-        sudo.u2fAuth = true;
-        u2f.enable = true;
+        sddm = {
+            enableGnomeKeyring = true;
+            u2fAuth = true;
+            text = ''
+              session optional pam_gnome_keyring.so auto_start
+            '';
+        };
+      # login = {
+      #   u2fAuth = true;
+      #   extraConfig = ''
+      #     session optional pam_gnome_keyring.so auto_start
+      #   '';
+      # };        
+      login = {
+        text = ''
+          #%PAM-1.0
+          # Enable your YubiKey for login.
+          auth      sufficient  pam_u2f.so
+          # This line allows password login as a fallback.
+          auth      required    pam_unix.so
+          account   required    pam_unix.so
+          password  required    pam_unix.so
+          
+          # This is the line that unlocks the keyring for your TTY session.
+          session   optional    pam_gnome_keyring.so auto_start
+          # This is the standard session line.
+          session   required    pam_unix.so
+        '';
+      };     
+
+      # This enables U2F/Passkey authentication for the 'sudo' service
+      sudo.u2fAuth  = true;
       };       
     };
   };
@@ -329,8 +366,11 @@ in
       LIBVA_DRIVER_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      NIXOS_OZONE_WL = "1"; # Hint for Electron apps to use Wayland
       WLR_NO_HARDWARE_CURSORS = "1";
-    };    
+      HYPRCURSOR_THEME = "Future-Cyan";
+      HYPRCURSOR_SIZE = "24";
+   };    
     systemPackages = with pkgs; [
       git
       lnav 
