@@ -109,7 +109,7 @@ in
     loader = {
       systemd-boot = {
         enable = true;
-        configurationLimit = 7;
+        #configurationLimit = 7;
 
       };
       efi.canTouchEfiVariables = true;
@@ -309,56 +309,32 @@ in
     ];
   };
   # This enables the daemon that talks to the YubiKey hardware
-  services.pcscd.enable = true;
+  #services.pcscd.enable = true;
   security = {
     rtkit.enable = true;
+    pam.services.sddm.enableGnomeKeyring = true;
+    pam.services.swaylock = {
+      text = "auth include login";
+    };  
 
     pam = {
       u2f = {
         enable = true;
-        control = "sufficient";                              # This means the key is SUFFICIENT for auth not true 2 factor.
+        control = "sufficient"; # This means the key is SUFFICIENT for auth.
         settings = {
-          cue = true;                                        # Prints "Please touch the device."
-          authFile = "/home/ayrton/.config/Yubico/u2f_keys"; # Path to Yubikey key file
+          cue = true;             # Prints "Please touch the device."
+          authFile = "/home/ayrton/.config/Yubico/u2f_keys"; # Path to your Yubikey key file};
         };
       };
       services =  {
-        sddm = {
-            enableGnomeKeyring = true;
-            u2fAuth = true;
-            text = ''
-              session optional pam_gnome_keyring.so auto_start
-            '';
-        };
-      # login = {
-      #   u2fAuth = true;
-      #   extraConfig = ''
-      #     session optional pam_gnome_keyring.so auto_start
-      #   '';
-      # };        
-      login = {
-        text = ''
-          #%PAM-1.0
-          # Enable your YubiKey for login.
-          auth      sufficient  pam_u2f.so
-          # This line allows password login as a fallback.
-          auth      required    pam_unix.so
-          account   required    pam_unix.so
-          password  required    pam_unix.so
-          
-          # This is the line that unlocks the keyring for your TTY session.
-          session   optional    pam_gnome_keyring.so auto_start
-          # This is the standard session line.
-          session   required    pam_unix.so
-        '';
-      };     
-
-      # This enables U2F/Passkey authentication for the 'sudo' service
-      sudo.u2fAuth  = true;
+    # This enables U2F/Passkey authentication for the 'sudo' service
+        login.u2fAuth = true;
+        sudo.u2fAuth = true;
+        u2f.enable = true;
       };       
     };
-  };
- 
+  }; 
+
   services.udev.packages = [ pkgs.libu2f-host ];
   environment = {
     #Variables used by Hyprland
