@@ -8,7 +8,6 @@
     ./modules/starship.nix
     ./modules/git.nix
     ./modules/zellij.nix
-    ./modules/firefox.nix
     #./modules/rust.nix
   ];
 
