@@ -161,7 +161,7 @@ in
       mainBar = {
         layer = "top";
         position = "top";
-        height = 30;
+        height = 25;
         modules-left = [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
         modules-center = [ "network" "cpu" "memory" ];
         modules-right = [ "tray" "pulseaudio" "clock" "custom/power"];
@@ -435,7 +435,7 @@ in
           "windowsOut, 1, 7, default, popin 80%"
           "border, 1, 10, default"
           "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
+          "workspaces, 0, 9, default"
         ];
       };
 
@@ -539,7 +539,7 @@ in
         "float, class:^(thunar)$" # 
         "float, class:^(dolphin)$" # <-- ADD THIS LINE
       ];
-      monitor = "DP-2, 5120x1440@120, 0x0, 1.0";
+      monitor = "DP-2, 5120x1440@120, 0x0, 1.25";
     };
   };
 home.file.".config/hypr/hyprpaper.conf" = {

@@ -1,3 +1,6 @@
+#REFERENCE CONFIG
+
+
 { config, pkgs, self, ... }:
 let
   # Fetch the Steven Black hosts file.
@@ -221,14 +224,6 @@ in
     hyprland = {
       enable = true; # Set to true if you want to use Hyprland instead of Sway
     };
-
-
-    firefox = {
-      enable = true;
-      package = pkgs.firefox;
-      nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
-    };
-    
     ssh.startAgent = true;
 
     git.config = {
@@ -367,6 +362,8 @@ in
       kdePackages.qtsvg
       kdePackages.dolphin
       pam_u2f
+      peazip
+      p7Zip
     ];
   };
 

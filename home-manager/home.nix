@@ -8,11 +8,13 @@
     ./modules/starship.nix
     ./modules/git.nix
     ./modules/zellij.nix
+    ./modules/firefox.nix
     #./modules/rust.nix
   ];
 
   programs.home-manager.enable = true;
   services.gnome-keyring.enable = true;
+  programs.jujutsu.enable = true; 
 
 
   xdg.portal = {
@@ -31,7 +33,6 @@
     username = "ayrton";
     homeDirectory = "/home/ayrton";
     stateVersion = "25.05";
-
 
     
 
