@@ -100,8 +100,3 @@ To deploy this configuration on a new machine:
 sudo nixos-rebuild switch --flake .#nova-nix
 ```
 
----
-
-This README should serve as an excellent starting point for your repository. It not only lists your packages but also explains the rationale behind your architectural choices, making it valuable for both your future self and anyone else who might learn from your setup.
-
-Now, let's talk about those upgrades. What are you looking to improve or change? We can discuss updating your channels, adding new services, or refining your existing configuration.
