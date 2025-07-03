@@ -23,6 +23,7 @@
       environmentVariables = {
         CARAPACE_BRIDGES = "fish,bash,zsh"; # Add or remove bridges as needed
         NIXPKGS_ALLOW_UNFREE = "1"; # Moved from extraConfig for consistency
+        DOTNET_ROOT = "/etc/profiles/per-user/ayrton/bin/dotnet";
       };
 
       # def nrsu [] {
@@ -53,6 +54,7 @@
         nsp = "nix-shell -p ";
         nspi = "nix-shell -p inkscape";
         nspc = "nix-shell -p google-chrome";
+        htop = "btop";
         aliases = "scope aliases";
       };
 

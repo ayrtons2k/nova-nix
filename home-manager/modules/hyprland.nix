@@ -283,31 +283,38 @@ in
           label = "lock";
           action = "${pkgs.hyprlock}/bin/hyprlock";
           keybind = "l";
+          text = "lock";
+          
         }
         {
           label = "logout";
           action = "hyprctl dispatch exit";
           keybind = "e";
+          text = "logout";
         }
         {
           label = "suspend";
           action = "systemctl suspend";
           keybind = "s";
+          text = "suspend";
         }
         {
           label = "hibernate";
           action = "systemctl hibernate";
           keybind = "h";
+          text = "hibernate";
         }
         {
           label = "reboot";
           action = "systemctl reboot";
           keybind = "r";
+          text = "reboot";
         }
         {
           label = "shutdown";
           action = "systemctl poweroff";
           keybind = "p";
+          text = "lock";
         }
       ];
       style = ''
@@ -531,8 +538,6 @@ in
       # --- WINDOW RULES ---
       windowrulev2 = [
         "opacity 0.85 0.70, class:(.*)"
-        "workspace 2, class:^(firefox)$"
-        "workspace 3, class:^(Code)$" # Note: VSCode class is often capitalized
         "float, class:^(Pavucontrol)$"
         "float, class:^(blueman-manager)$"
         "float, title:^(alsamixer)$"

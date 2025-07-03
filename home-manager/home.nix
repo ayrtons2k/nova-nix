@@ -1,5 +1,4 @@
-{ config, pkgs, unstable, ... }:
-
+{ config, pkgs, lib, unstable, ... }:
 {
   imports = [
     ./modules/hyprland.nix
@@ -8,12 +7,16 @@
     ./modules/starship.nix
     ./modules/git.nix
     ./modules/zellij.nix
+    ./modules/libre-office.nix
+    
     #./modules/rust.nix
+
   ];
 
   programs.home-manager.enable = true;
   services.gnome-keyring.enable = true;
   programs.jujutsu.enable = true; 
+  programs.ayrton.libreoffice.enable = true;
 
 
   xdg.portal = {
@@ -46,9 +49,11 @@
       ripgrep
       gitAndTools.git-lfs
       gitAndTools.gh
-      htop
+      btop
       jq
       fd
+      pdftk
+      pdfcpu
       # --- REPLACE THIS ---
        plasma5Packages.kdeconnect-kde
       #indicator-kdeconnect # Provides a system tray icon for i3
@@ -77,7 +82,9 @@
       pkgs.gnome-keyring
       aichat
       pkgs.cliphist
-      pkgs.wl-clipboard       
+      pkgs.wl-clipboard
+      wget
+      btop       
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);

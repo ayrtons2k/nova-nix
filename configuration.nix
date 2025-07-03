@@ -9,7 +9,7 @@ let
     url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
     # The sha256 hash ensures the file we download is the one we expect.
     # See below for how to get/update this hash.
-    sha256 = "0kcnmqgfpai07dk96aiy403bk6frz0fampja2835n71zh031c5jk";
+    sha256 = "sha256:0mlx9l8k3mmx41hrlmqk6bibz8fvg6xzzpazkfizkc8ivw2nrgb7";
   };
 
 in
@@ -221,6 +221,13 @@ in
   };
 
   programs = {
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/home/ayrton/nova-nix-config";
+    };
+
     hyprland = {
       enable = true; # Set to true if you want to use Hyprland instead of Sway
     };
@@ -371,6 +378,8 @@ in
       kdePackages.dolphin
       pam_u2f
       peazip
+      nix-output-monitor
+      nvd
     ];
   };
 
