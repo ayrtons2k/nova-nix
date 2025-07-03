@@ -1,3 +1,6 @@
+#REFERENCE CONFIG
+
+
 { config, pkgs, self, ... }:
 let
   # Fetch the Steven Black hosts file.
@@ -6,13 +9,13 @@ let
     url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
     # The sha256 hash ensures the file we download is the one we expect.
     # See below for how to get/update this hash.
-    sha256 = "0kcnmqgfpai07dk96aiy403bk6frz0fampja2835n71zh031c5jk";
+    sha256 = "sha256:0mlx9l8k3mmx41hrlmqk6bibz8fvg6xzzpazkfizkc8ivw2nrgb7";
   };
 
 in
 {
   #--- LABEL ----------------------------------------------------------------
-  system.nixos.label = "flake-gen-4-hyprland";
+  system.nixos.label = "flake-gen-5-yubi";
   #--------------------------------------------------------------------------
   
   imports = [ 
@@ -21,17 +24,8 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-  ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
-  #breaks hyprland scaling (I KID YOU NOT!)
-  #=======================================================
   services.xserver.videoDrivers = [ "nvidia" ];
   #boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
-  #=======================================================
-    ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
 
   hardware = {
     nvidia = {
@@ -72,8 +66,30 @@ in
     };
   };
 
+  # In your configuration.nix
 
- 
+  # This is the correct way to define the service inside configuration.nix
+  systemd.user.services.cliphist-daemon = {
+    # 'Unit' options are now top-level
+    description = "Clipboard History Daemon (cliphist)";
+    after = [ "graphical-session-pre.target" ];
+    partOf = [ "graphical-session.target" ];
+
+    # 'Install' options are now top-level
+    wantedBy = [ "graphical-session.target" ];
+
+    # 'Service' options go into the 'serviceConfig' block,
+    # and the main command goes in the 'script'.
+    script = ''
+      # The script block gives us a clean shell to run our command
+      ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store
+    '';
+
+    serviceConfig = {
+      Restart = "on-failure";
+    };
+  }; 
+
   nixpkgs.config = {
     allowUnfree = true;
     config = {
@@ -96,7 +112,7 @@ in
     loader = {
       systemd-boot = {
         enable = true;
-        configurationLimit = 7;
+        #configurationLimit = 7;
 
       };
       efi.canTouchEfiVariables = true;
@@ -205,6 +221,13 @@ in
   };
 
   programs = {
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 4d --keep 3";
+      flake = "/home/ayrton/nova-nix-config";
+    };
+
     hyprland = {
       enable = true; # Set to true if you want to use Hyprland instead of Sway
     };
@@ -288,15 +311,15 @@ in
   # User configuration
   users.users.ayrton = {
     isNormalUser = true;
-    description = "ayrton";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
+    description  = "ayrton";
+    extraGroups  = [ "networkmanager" "wheel" ];
+    packages     = with pkgs; [
       kdePackages.kate
       git
     ];
   };
-
-  
+  # This enables the daemon that talks to the YubiKey hardware
+  #services.pcscd.enable = true;
   security = {
     rtkit.enable = true;
     pam.services.sddm.enableGnomeKeyring = true;
@@ -320,8 +343,8 @@ in
         u2f.enable = true;
       };       
     };
-  };
- 
+  }; 
+
   services.udev.packages = [ pkgs.libu2f-host ];
   environment = {
     #Variables used by Hyprland
@@ -329,8 +352,11 @@ in
       LIBVA_DRIVER_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      NIXOS_OZONE_WL = "1"; # Hint for Electron apps to use Wayland
       WLR_NO_HARDWARE_CURSORS = "1";
-    };    
+      HYPRCURSOR_THEME = "Future-Cyan";
+      HYPRCURSOR_SIZE = "24";
+   };    
     systemPackages = with pkgs; [
       git
       lnav 
@@ -351,6 +377,9 @@ in
       kdePackages.qtsvg
       kdePackages.dolphin
       pam_u2f
+      peazip
+      nix-output-monitor
+      nvd
     ];
   };
 
