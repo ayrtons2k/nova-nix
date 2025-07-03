@@ -21,19 +21,13 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   
-  ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
-  #breaks hyprland scaling (I KID YOU NOT!)
-  #=======================================================
-  services.xserver.videoDrivers = [ "nvidia" ];
-  #boot.extraModulePackages = [ config.boot.kernelPackages.nvidiaPackages.stable ];
-  hardware.opengl = {
-    enable = true;
-    driSupport32Bit = true;
-  };
-  #=======================================================
-    ###DO NOT MOVE THESE TO THE SERVICES AND HARDWARE BLOCKS
-
   hardware = {
+
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
+
     nvidia = {
       modesetting.enable = true;
       powerManagement.enable = false;
@@ -108,6 +102,9 @@ in
   };
 
   services = {
+
+    xserver.videoDrivers = [ "nvidia" ];
+
     displayManager.sddm = {
       enable = true;
       wayland.enable = true;
