@@ -32,11 +32,6 @@
               config.allowUnfree = true;
               config.allowUnfreePredicate = (_: true);
             };
-            # customPkgs = import nixpkgs {
-            #   system = "x86_64-linux";
-            #   config.allowUnfree = true;
-            #   config.allowUnfreePredicate = (_: true);
-            # };
           };
         }
       ];
