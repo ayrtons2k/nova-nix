@@ -228,12 +228,10 @@ in
       };
     };
   };
-
-
     xdg.configFile."wofi/style.css".text = ''
     window {
         margin: 0px;
-        border: 2px solid #bd93f9; /* Dracula Purple */
+        border: 2px solid rgb(83, 81, 86); /* Dracula Purple */
         background-color: #282a36; /* Dracula Background */
         border-radius: 5px;
     }
@@ -275,7 +273,7 @@ in
     }
   '';
 
-    # wlogout configuration (example layout)
+    
     programs.wlogout = {
       enable = true;
       layout = [
@@ -384,7 +382,7 @@ in
 
         */
 
-      "exec-once" = [
+      exec-once = [
         "hyprpaper -c ~/.config/hypr/hyprpaper.conf" 
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet"
@@ -411,9 +409,9 @@ in
       };
 
       general = {
-        gaps_in = 5;
-        gaps_out = 5;
-        border_size = 2;
+        gaps_in = 2;
+        gaps_out = 2;
+        border_size = 1;
         "col.active_border" = "rgb(78BCF0)";
         "col.inactive_border" = "rgb(504945)";
         #layout = "master";
