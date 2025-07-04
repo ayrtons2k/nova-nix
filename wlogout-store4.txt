@@ -1,3 +1,0 @@
-/nix/store/2my6wn7kpvx8007dck39n67mvlj8x9b5-wlogout-1.2.2,dir,22 B,1969-12-31 19:00:01 -05:00
-/nix/store/h5dql4a0b9xnv3ivx211ldrk2vxvbb7i-wlogout-1.2.2-fish-completions,dir,24 B,1969-12-31 19:00:01 -05:00
-/nix/store/x71467zz23rh80svs2iqy0423g7wsz5j-wlogout-1.2.2-man,dir,10 B,1969-12-31 19:00:01 -05:00

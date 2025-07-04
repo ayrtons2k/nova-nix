@@ -350,6 +350,8 @@ in
   services.udev.packages = [ pkgs.libu2f-host ];
   environment = {
     #Variables used by Hyprland
+    defaultUserShell = pkgs.nushell;
+    
     sessionVariables = {
       LIBVA_DRIVER_NAME = "nvidia";
       GBM_BACKEND = "nvidia-drm";
