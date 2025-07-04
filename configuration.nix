@@ -20,7 +20,6 @@ in
   
   imports = [ 
     ./hardware-configuration.nix
-    ./modules/gnome.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -350,7 +349,6 @@ in
   services.udev.packages = [ pkgs.libu2f-host ];
   environment = {
     #Variables used by Hyprland
-    defaultUserShell = pkgs.nushell;
     
     sessionVariables = {
       LIBVA_DRIVER_NAME = "nvidia";
