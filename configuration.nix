@@ -20,6 +20,7 @@ in
   
   imports = [ 
     ./hardware-configuration.nix
+    ./modules/gnome.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
