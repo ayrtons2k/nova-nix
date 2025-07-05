@@ -5,11 +5,15 @@ This is my NixOS configuration repo. This setup powers my development machine, `
 
 ## System Philosophy
 
-This is my second attempt at a stable NixOS installation. in the first one I used X11 With KDE Plasma 6.4. I loved it but!, likely because of my newness, I ended up configuring a ton of plasma features outside of my Nix manifest. WHen disaster occurred as it does, it was easy to restore my system but not Plasma. It was then that I decide to try Hyprland and made it a point to never open a settings applet or a dot file. so far I've been able to get configure Nova-Nix all through configuration I kept going back to the ideas in [Erase all your darlings](https://grahamc.com/blog/erase-your-darlings/)
+This is my second attempt at a stable NixOS installation, IT IS AN IMMATURE CONFIGURATION. It reflects where I am in my NixOS journey. 
 
-I have used Google's Gemini (I call it **Lexx**) **EXTENSIVELY** to help me get this set up. it has been an invaluable resource most of the times, but when we fail, it is usually together. I would say that about 40% of the configuration work goes w/o a hitch, we have issues in about another 40% of the work, and often doing some side research and feeding Lexx up to date context gets the job done. About 20% of the rest it is either me implementing a solution or possibly pivoting or abandonning 
+My first tryI used X11 With KDE Plasma 6.4. I loved it... but!, likely because of my newness, I ended up configuring a ton of plasma features outside of my Nix manifest. When disaster occurred as it does, it was easy to restore my system but not Plasma. It was then that I decided to try Hyprland and made it a point to never open a settings applet or edit a dot file. so far I've been able to configure Nova all through files I kept going back to the ideas in [Erase all your darlings](https://grahamc.com/blog/erase-your-darlings/)
 
-This configuration embodies several core principles:
+I have used Google's Gemini (I call it **Lexx**) **EXTENSIVELY** to help me get this set up. it has been an invaluable resource most of the times, but when we fail, it is usually together. I would say that about 40% of the configuration work goes w/o a hitch, we have issues in about another 40% of the work, and often doing some side research and feeding Lexx up to date context gets the job done. About 20% of the rest it is either me implementing a solution or possibly pivoting or abandonning the feature because of frustration.
+
+My plan now is to spend time learning Nix (not the installer, the language) and remove the veil of confusion when reading other people's code.
+
+This configuration attempts to implement several core principles:
 
 *   **Declarative:** NixOS, from the nixos.org [website](https://nixos.org/manual/nixos/stable/#preface): NixOS, a Linux distribution based on the purely functional package management system Nix, that is composed using modules and packages defined in the Nixpkgs project.
 *   **Reproducible:** Given the same hardware, this flake can rebuild the exact same system, ensuring consistency and easy recovery.
