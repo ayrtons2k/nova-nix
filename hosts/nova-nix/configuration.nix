@@ -2,12 +2,7 @@
 { config, pkgs, self, ... }:
 {
   # In your configuration.nix
-  nixpkgs.config = {
-    allowUnfree = true;
-    config = {
-      allowUnfreePredicate = (_: true);
-    };
-  };
+ 
 
   services = {
   

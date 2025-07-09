@@ -14,6 +14,7 @@
     ../../NixOS/bluetooth.nix
     ../../NixOS/graphics.nix
     ../../NixOS/audio.nix
+    ../../NixOS/nixpkgs-config.nix
     
     # ./services.nix
     # ./security.nix
