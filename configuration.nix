@@ -4,12 +4,9 @@
 { config, pkgs, self, ... }:
 let
   # Fetch the Steven Black hosts file.
-  # This makes your configuration self-contained and reproducible.
   stevenBlackHosts = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-    # The sha256 hash ensures the file we download is the one we expect.
-    # See below for how to get/update this hash.
-    sha256 = "sha256:1q7dkaq42pski1q0xzm7f4v1gy30vqw5yijn2532s9gy6a6yinlp";
+    sha256 = "sha256:1yrwn94qyhjifvs8jfv5r00fwkr7l5xqxgwa3n40sq52va8c2vcx";
   };
 
 in

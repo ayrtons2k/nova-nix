@@ -1,16 +1,13 @@
 { config, pkgs, lib, unstable, ... }:
 {
   imports = [
-    ./modules/hyprland.nix
-    ./modules/vscode.nix
-    ./modules/nushell.nix
-    ./modules/starship.nix
-    ./modules/git.nix
-    ./modules/zellij.nix
-    ./modules/libre-office.nix
-    
-    #./modules/rust.nix
-
+    ../../modules/home/hyprland.nix
+    ../../modules/home/vscode.nix
+    ../../modules/home/nushell.nix
+    ../../modules/home/starship.nix
+    ../../modules/home/git.nix
+    ../../modules/home/zellij.nix
+    ../../modules/home/libre-office.nix
   ];
 
   programs.home-manager.enable = true;
@@ -89,7 +86,7 @@
       # Add unstable packages here, e.g., neovim
     ]);
 
-    file.".config/alacritty/alacritty.toml".source = ./config/alacritty.toml;
+    file.".config/alacritty/alacritty.toml".source = ../../config/alacritty.toml;
   };
 
   # ... (keep the rest of your home.nix config)

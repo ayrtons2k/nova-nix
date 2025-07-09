@@ -155,7 +155,7 @@ in
   programs.waybar = {
     enable = true;
     # Tell Waybar where to find its stylesheet
-    style = ./../config/waybar.css;
+    style = ../../config/waybar.css;
     # Define the bar's layout and modules
     settings = {
       mainBar = {
