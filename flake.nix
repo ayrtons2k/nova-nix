@@ -19,29 +19,32 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };    
   };
-
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sddm-sugar-candy-nix, stylix, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, sddm-sugar-candy-nix, ... }@inputs: 
+   let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      config.allowUnfreePredicate = (_: true);
+    };
+  in
+  {
     nixosConfigurations.nova-nix = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       modules = [
         sddm-sugar-candy-nix.nixosModules.default
-        ./configuration.nix
-        ./hardware-configuration.nix
+        ./hosts/nova-nix/configuration.nix
+        ./hosts/nova-nix/hardware-configuration.nix
         home-manager.nixosModules.home-manager
-        stylix.nixosModules.stylix        
         {
           home-manager.useGlobalPkgs = true; # Share nixpkgs with the system
           home-manager.useUserPackages = true; # Install user packages to /home/ayrton/.nix-profile
           home-manager.users.ayrton = import ./users/ayrton/home.nix;
-          home-manager.backupFileExtension = "backup";          
+          home-manager.backupFileExtension = "backup"; 
           home-manager.extraSpecialArgs = {
             unstable = import nixpkgs-unstable {
-              system = "x86_64-linux";
+              system = pkgs.${system};
               config.allowUnfree = true;
               config.allowUnfreePredicate = (_: true);
             };

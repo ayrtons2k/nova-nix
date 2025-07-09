@@ -32,9 +32,6 @@
     username = "ayrton";
     homeDirectory = "/home/ayrton";
     stateVersion = "25.05";
-
-    
-
     packages = with pkgs; [
       gnupg
       pinentry-tty

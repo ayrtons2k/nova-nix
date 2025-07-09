@@ -1,3 +1,4 @@
+#This is not being used, here for reference
 format = """
 [](#a3aed2)\
 [   ](bg:#a3aed2 fg:#090c0c)\
@@ -83,7 +84,6 @@ $git_commit\
 """
 
 
-
 # right_format = """
 # $git_branch\
 # $git_commit\
@@ -93,8 +93,6 @@ $git_commit\
 # $git_status\
 # $hg_branch\
 # """
-
-
 
 
 # right_format = """
