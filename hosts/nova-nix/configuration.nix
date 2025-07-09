@@ -1,46 +1,7 @@
 #REFERENCE CONFIG
 { config, pkgs, self, ... }:
 {
-  hardware = {
-
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings = {
-        "D6:B9:E9:7A:65:A5" = {
-          name = "MX Master 3";
-          trusted = "yes";
-          paired = "yes";
-          auto-connect = "yes";
-        };
-      };
-    };
-  };
-
   # In your configuration.nix
-
-  # This is the correct way to define the service inside configuration.nix
-  systemd.user.services.cliphist-daemon = {
-    # 'Unit' options are now top-level
-    description = "Clipboard History Daemon (cliphist)";
-    after = [ "graphical-session-pre.target" ];
-    partOf = [ "graphical-session.target" ];
-
-    # 'Install' options are now top-level
-    wantedBy = [ "graphical-session.target" ];
-
-    # 'Service' options go into the 'serviceConfig' block,
-    # and the main command goes in the 'script'.
-    script = ''
-      # The script block gives us a clean shell to run our command
-      ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store
-    '';
-
-    serviceConfig = {
-      Restart = "on-failure";
-    };
-  }; 
-
   nixpkgs.config = {
     allowUnfree = true;
     config = {
