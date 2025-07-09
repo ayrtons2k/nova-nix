@@ -5,7 +5,6 @@
     packages = with pkgs; [
       noto-fonts
     ];
-
     fontconfig = {
       defaultFonts = {
         serif = [ "Noto Serif" ];
