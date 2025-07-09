@@ -1,6 +1,7 @@
 
 { config, pkgs, self, ... }:
 {    
+  system.nixos.label = "V4";
     # Bootloader
   nixpkgs.config.allowUnfree = true;    
   boot = {

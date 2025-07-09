@@ -1,12 +1,11 @@
 # hosts/nova/default.nix
 { config, pkgs, inputs, ... }:
 {
-  system.nixos.label = "V4";
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ../../NiXOS/core.nix
-    ../../NiXOS/networking.nix
+    ../../NixOS/core.nix
+    ../../NixOS/networking.nix
     ../../home/core.nix
     
     # ./services.nix
