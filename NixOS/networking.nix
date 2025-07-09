@@ -3,7 +3,7 @@ let
   # Fetch the Steven Black hosts file.
   stevenBlackHosts = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-    sha256 = "sha256:0mlx9l8k3mmx41hrlmqk6bibz8fvg6xzzpazkfizkc8ivw2nrgb7";
+    sha256 = "sha256:1yrwn94qyhjifvs8jfv5r00fwkr7l5xqxgwa3n40sq52va8c2vcx";
   };
 in 
 {

@@ -4,9 +4,9 @@
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
+    ./graphics.nix
     ../../NixOS/core.nix
     ../../NixOS/networking.nix
-    ../../home/core.nix
     
     # ./services.nix
     # ./security.nix

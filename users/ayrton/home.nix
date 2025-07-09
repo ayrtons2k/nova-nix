@@ -1,6 +1,7 @@
 { config, pkgs, lib, unstable, ... }:
 {
   imports = [
+    ../../home/core.nix
     ../../modules/home/hyprland.nix
     ../../modules/home/vscode.nix
     ../../modules/home/nushell.nix
