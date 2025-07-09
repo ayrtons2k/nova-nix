@@ -7,26 +7,6 @@
     openssh.enable = true;
   };
  
- 
- 
-  programs = {
-    hyprland = {
-      enable = true; # Set to true if you want to use Hyprland instead of Sway
-    };
-  
-  };
-  # Enable Bluetooth
-  
-  # User configuration
-  users.users.ayrton = {
-    isNormalUser = true;
-    description  = "ayrton";
-    extraGroups  = [ "networkmanager" "wheel" ];
-    packages     = with pkgs; [
-      kdePackages.kate
-      git
-    ];
-  };
   # This enables the daemon that talks to the YubiKey hardware
   #services.pcscd.enable = true;
   security = {

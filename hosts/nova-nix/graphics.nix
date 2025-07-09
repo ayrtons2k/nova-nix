@@ -27,6 +27,12 @@
         gperf
       ];
     };
+  }; #hardware
+  programs = {
+    hyprland = {
+      enable = true; # Set to true if you want to use Hyprland instead of Sway
+    };
+  }; #programs
 
-  };
+
 }

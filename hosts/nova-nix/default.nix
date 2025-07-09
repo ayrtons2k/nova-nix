@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ./graphics.nix
 
+
     #All machines
     ../../NixOS/audio.nix
     ../../NixOS/bluetooth.nix
@@ -16,6 +17,9 @@
     ../../NixOS/locale-NY.nix
     ../../NixOS/networking.nix
     ../../NixOS/nixpkgs-config.nix
+
+    #user definitions
+    ../../users/ayrton/default.nix
     
     # ./services.nix
     # ./security.nix
