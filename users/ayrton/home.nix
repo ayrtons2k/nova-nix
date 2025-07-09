@@ -9,6 +9,8 @@
     ../../modules/home/git.nix
     ../../modules/home/zellij.nix
     ../../modules/home/libre-office.nix
+    ../../modules/home/thunar.nix
+    
   ];
 
   programs.home-manager.enable = true;

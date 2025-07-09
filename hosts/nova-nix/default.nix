@@ -7,12 +7,15 @@
     ./bluetooth.nix               
     ./hardware-configuration.nix
     ./graphics.nix
-
+    ./security.nix
+    ./environment.nix
+    ./fonts.nix
 
     #All machines
     ../../NixOS/audio.nix
     ../../NixOS/bluetooth.nix
     ../../NixOS/core.nix
+    ../../NixOS/fonts.nix
     ../../NixOS/graphics.nix
     ../../NixOS/locale-NY.nix
     ../../NixOS/networking.nix

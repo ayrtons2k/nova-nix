@@ -2,6 +2,7 @@
 { config, pkgs, self, ... }:
 {    
   system.nixos.label = "V4";
+  system.stateVersion = "25.05";
     # Bootloader
   nixpkgs.config.allowUnfree = true;    
   boot = {
