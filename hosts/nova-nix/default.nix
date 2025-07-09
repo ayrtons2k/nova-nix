@@ -9,11 +9,12 @@
     ./graphics.nix
 
     #All machines
-    ../../NixOS/core.nix
-    ../../NixOS/networking.nix
-    ../../NixOS/bluetooth.nix
-    ../../NixOS/graphics.nix
     ../../NixOS/audio.nix
+    ../../NixOS/bluetooth.nix
+    ../../NixOS/core.nix
+    ../../NixOS/graphics.nix
+    ../../NixOS/locale-NY.nix
+    ../../NixOS/networking.nix
     ../../NixOS/nixpkgs-config.nix
     
     # ./services.nix

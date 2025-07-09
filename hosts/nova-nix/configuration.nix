@@ -2,117 +2,18 @@
 { config, pkgs, self, ... }:
 {
   # In your configuration.nix
- 
-
   services = {
-  
     gnome.gnome-keyring.enable = true;
     openssh.enable = true;
-
-  
-
   };
  
-  time.timeZone = "America/New_York";
  
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
+ 
   programs = {
-    nh = {
-      enable = true;
-      clean.enable = true;
-      clean.extraArgs = "--keep-since 4d --keep 3";
-      flake = "/home/ayrton/nova-nix-config";
-    };
-
     hyprland = {
       enable = true; # Set to true if you want to use Hyprland instead of Sway
     };
-
-
-    firefox = {
-      enable = true;
-      package = pkgs.firefox;
-      nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
-    };
-    
-    ssh.startAgent = true;
-
-    git.config = {
-      init.defaultBranch = "main";
-      url."https://github.com/".insteadOf = [ "gh:" "github:" ];
-    };
-
-    # Nix-LD for compatibility
-    nix-ld = {
-      enable = true;
-      libraries = with pkgs; [
-        alsa-lib
-        at-spi2-atk
-        at-spi2-core
-        atk
-        cairo
-        cups
-        curl
-        dbus
-        expat
-        fontconfig
-        freetype
-        fuse3
-        gdk-pixbuf
-        glib
-        gtk3
-        icu
-        libGL
-        libappindicator-gtk3
-        libdrm
-        libglvnd
-        libnotify
-        #libpulseaudiofontconfig
-        libunwind
-        libusb1
-        libuuid
-        libxkbcommon
-        libxml2
-        mesa
-        nspr
-        nss
-        openssl
-        pango
-        pipewire
-        stdenv.cc.cc
-        systemd
-        microsoft-edge
-        vulkan-loader
-        xorg.libX11
-        xorg.libXScrnSaver
-        xorg.libXcomposite
-        xorg.libXcursor
-        xorg.libXdamage
-        xorg.libXext
-        xorg.libXfixes
-        xorg.libXi
-        xorg.libXrandr
-        xorg.libXrender
-        xorg.libXtst
-        xorg.libxcb
-        xorg.libxkbfile
-        xorg.libxshmfence
-        zlib
-        libsecret
-      ];
-    };
+  
   };
   # Enable Bluetooth
   

@@ -31,4 +31,7 @@
       Restart = "on-failure";
     };
   }; 
+  programs = {
+    ssh.startAgent = true;
+  };
 }
