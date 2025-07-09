@@ -548,8 +548,8 @@ in
 home.file.".config/hypr/hyprpaper.conf" = {
     # The `text` attribute allows us to use Nix string interpolation.
     text = ''
-      preload = ${../../wallpapers/hyprlnd-nova-nix.png}
+      preload = ${../../assets/wallpapers/hyprlnd-nova-nix.png}
       splash = false
-      wallpaper = DP-2, ${../../wallpapers/hyprlnd-nova-nix.png}
+      wallpaper = DP-2, ${../../assets/wallpapers/hyprlnd-nova-nix.png}
     '';
   };}

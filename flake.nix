@@ -34,8 +34,7 @@
       inherit system;
       modules = [
         sddm-sugar-candy-nix.nixosModules.default
-        ./hosts/nova-nix/configuration.nix
-        ./hosts/nova-nix/hardware-configuration.nix
+        ./hosts/nova-nix/default.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true; # Share nixpkgs with the system

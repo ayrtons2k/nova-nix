@@ -1,26 +1,6 @@
 #REFERENCE CONFIG
-
-
 { config, pkgs, self, ... }:
-let
-  # Fetch the Steven Black hosts file.
-  stevenBlackHosts = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
-    sha256 = "sha256:1yrwn94qyhjifvs8jfv5r00fwkr7l5xqxgwa3n40sq52va8c2vcx";
-  };
-
-in
 {
-  #--- LABEL ----------------------------------------------------------------
-  system.nixos.label = "flake-gen-5-yubi";
-  #--------------------------------------------------------------------------
-  
-  imports = [ 
-    ./hardware-configuration.nix
-  ];
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
   hardware = {
 
     nvidia = {
@@ -90,15 +70,6 @@ in
     config = {
       allowUnfreePredicate = (_: true);
     };
-  };
-
-  # networking.extraHosts takes a string and appends it to /etc/hosts.
-  # We read the file we just fetched and use its content.
-  networking = {
-    extraHosts = builtins.readFile stevenBlackHosts;  
-    hostName = "nova-nix";
-    networkmanager.enable = true;
-    nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
   };
 
   # Bootloader

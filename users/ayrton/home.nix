@@ -15,7 +15,6 @@
   programs.jujutsu.enable = true; 
   programs.ayrton.libreoffice.enable = true;
 
-
   xdg.portal = {
     enable = true;
     # On NixOS, you might prefer to set this in configuration.nix
