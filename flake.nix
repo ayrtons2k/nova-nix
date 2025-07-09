@@ -37,8 +37,8 @@
         ./hosts/nova-nix/default.nix
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true; # Share nixpkgs with the system
-          home-manager.useUserPackages = true; # Install user packages to /home/ayrton/.nix-profile
+          home-manager.useGlobalPkgs = false;                          # Share nixpkgs with the system
+          home-manager.useUserPackages = true;                        # Install user packages to /home/ayrton/.nix-profile
           home-manager.users.ayrton = import ./users/ayrton/home.nix;
           home-manager.backupFileExtension = "backup"; 
           home-manager.extraSpecialArgs = {
