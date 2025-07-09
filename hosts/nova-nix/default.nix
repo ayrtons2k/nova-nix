@@ -2,11 +2,16 @@
 { config, pkgs, inputs, ... }:
 {
   imports = [
+    #specific to nova-nix
     ./configuration.nix
+    ./bluetooth.nix               
     ./hardware-configuration.nix
     ./graphics.nix
+
+    #All machines
     ../../NixOS/core.nix
     ../../NixOS/networking.nix
+    ../../NixOS/bluetooth.nix
     
     # ./services.nix
     # ./security.nix
