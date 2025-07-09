@@ -14,22 +14,6 @@
     gnome.gnome-keyring.enable = true;
     openssh.enable = true;
 
-    pulseaudio.enable = false;
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-
-
-    # ollama.enable = true;
-    # open-webui = {
-    #   enable = true;
-    #   environment.OLLAMA_API_BASE_URL = "http://localhost:11434";
-    # };
-
     resolved = {
       enable = true;
       dnssec = "true";

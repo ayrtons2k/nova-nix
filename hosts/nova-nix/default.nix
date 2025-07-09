@@ -13,6 +13,7 @@
     ../../NixOS/networking.nix
     ../../NixOS/bluetooth.nix
     ../../NixOS/graphics.nix
+    ../../NixOS/audio.nix
     
     # ./services.nix
     # ./security.nix
