@@ -9,7 +9,7 @@ let
     url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts";
     # The sha256 hash ensures the file we download is the one we expect.
     # See below for how to get/update this hash.
-    sha256 = "sha256:0mlx9l8k3mmx41hrlmqk6bibz8fvg6xzzpazkfizkc8ivw2nrgb7";
+    sha256 = "sha256:1q7dkaq42pski1q0xzm7f4v1gy30vqw5yijn2532s9gy6a6yinlp";
   };
 
 in
@@ -335,6 +335,7 @@ in
         settings = {
           cue = true;             # Prints "Please touch the device."
           authFile = "/home/ayrton/.config/Yubico/u2f_keys"; # Path to your Yubikey key file};
+          origin = "pam://ayrton-local-nix-auth";     
         };
       };
       services =  {
