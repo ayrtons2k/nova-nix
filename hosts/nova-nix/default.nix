@@ -3,13 +3,13 @@
 {
   imports = [
     #specific to nova-nix
-    ./configuration.nix
     ./bluetooth.nix               
-    ./hardware-configuration.nix
-    ./graphics.nix
-    ./security.nix
     ./environment.nix
     ./fonts.nix
+    ./graphics.nix
+    ./hardware-configuration.nix
+    #./nur.nix
+    ./security.nix
 
     #All machines
     ../../NixOS/audio.nix

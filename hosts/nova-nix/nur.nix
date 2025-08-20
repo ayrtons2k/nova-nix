@@ -1,8 +1,6 @@
 #REFERENCE CONFIG
-{ config, pkgs, self, ... }:
+{ config, pkgs, ... }:
 {
-  # In your configuration.nix
-
   #https://github.com/nix-community/NUR
   /*
     The Nix User Repository (NUR) is a community-driven meta repository for Nix packages. 

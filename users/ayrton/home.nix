@@ -50,15 +50,13 @@
       fd
       pdftk
       pdfcpu
-      # --- REPLACE THIS ---
-       plasma5Packages.kdeconnect-kde
-      #indicator-kdeconnect # Provides a system tray icon for i3
+      firefox
 
       tmux
       lazygit
       lazydocker
+      lazyjj
       jetbrains-mono
-      neofetch
       fastfetch
       navi
       v4l-utils
@@ -80,13 +78,13 @@
       pkgs.cliphist
       pkgs.wl-clipboard
       wget
-      btop       
+      btop
+      pdftk
+      firefox       
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);
 
     file.".config/alacritty/alacritty.toml".source = ../../config/alacritty.toml;
   };
-
-  # ... (keep the rest of your home.nix config)
 }
