@@ -51,9 +51,9 @@
         cv = "xclip -selection clipboard -o";
         pbcopy = "cc";
         pbpaste = "cv";
-        nsp = "nix-shell -p ";
-        nspi = "nix-shell -p inkscape";
-        nspc = "nix-shell -p google-chrome";
+        nsp = "nix-shell --extra-experimental-features flakes -p ";
+        nspi = "nix-shell --extra-experimental-features flakes -p inkscape";
+        nspc = "nix-shell --extra-experimental-features flakes -p google-chrome";
         htop = "btop";
         aliases = "scope aliases";
       };

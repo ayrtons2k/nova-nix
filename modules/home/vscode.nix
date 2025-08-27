@@ -15,6 +15,8 @@
     profiles.default.extensions = with pkgs.vscode-extensions;
       [
         # bbenoist.Nix
+        ms-dotnettools.csdevkit
+        ms-dotnettools.csharp
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
@@ -48,6 +50,7 @@
       ];
   };
 }
+
 /*
    settings
 {

@@ -13,6 +13,7 @@
 
     #All machines
     ../../NixOS/audio.nix
+    ../../NixOS/printers.nix
     ../../NixOS/bluetooth.nix
     ../../NixOS/core.nix
     ../../NixOS/fonts.nix
@@ -20,9 +21,10 @@
     ../../NixOS/locale-NY.nix
     ../../NixOS/networking.nix
     ../../NixOS/nixpkgs-config.nix
+    ../../NixOS/nix-settings.nix
 
     #user definitions
     ../../users/ayrton/default.nix
-    
+   
   ];
 }
