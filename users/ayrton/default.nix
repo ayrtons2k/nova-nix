@@ -1,6 +1,5 @@
 { config, pkgs, self, ... }:
 {
-  
   users.users.ayrton = {
     isNormalUser = true;
     description  = "ayrton";

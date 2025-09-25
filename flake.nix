@@ -43,12 +43,20 @@
           home-manager.backupFileExtension = "backup"; 
           home-manager.extraSpecialArgs = {
             unstable = import nixpkgs-unstable {
-              system = pkgs.${system};
+              inherit system;
               config.allowUnfree = true;
               config.allowUnfreePredicate = (_: true);
             };
           };
         }
+      ];
+    };
+
+    nixosConfigurations.web-vm = nixpkgs.lib.nixosSystem {
+      inherit system;
+            specialArgs = { "flake-nixpkgs" = nixpkgs; }; 
+      modules = [
+        ./hosts/web-vm/default.nix
       ];
     };
   };

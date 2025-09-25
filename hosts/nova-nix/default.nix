@@ -13,7 +13,7 @@
 
     #All machines
     ../../NixOS/audio.nix
-    ../../NixOS/printers.nix
+    ../../NixOS/peripherals.nix
     ../../NixOS/bluetooth.nix
     ../../NixOS/core.nix
     ../../NixOS/fonts.nix

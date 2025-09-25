@@ -15,6 +15,13 @@
   programs = {
     zoxide.enableNushellIntegration = true;
 
+     # Add this entire block for direnv
+    direnv = {
+      enable = true;
+      enableNushellIntegration = true; # This is the magic!
+      nix-direnv.enable = true;        # Highly recommended for Nix users
+    };
+
     nushell = {
       enable = true;
 

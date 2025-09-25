@@ -4,6 +4,7 @@
     displayManager.sddm = {
       enable = true;
       wayland.enable = true;
+   
       
       # settings = {
       #   Autologin = {
@@ -24,6 +25,10 @@
           PartialBlur = true;
         };
       };
+
+      extraPackages = with pkgs; [
+        qt5.qtgraphicaleffects
+      ];
     };
   };  
 }

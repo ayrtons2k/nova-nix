@@ -3,6 +3,7 @@
   imports = [
     ../../home/core.nix
     ../../modules/home/hyprland.nix
+#    ../../modules/home/simple-scan.nix
     ../../modules/home/vscode.nix
     ../../modules/home/nushell.nix
     ../../modules/home/starship.nix
@@ -10,7 +11,6 @@
     ../../modules/home/zellij.nix
     ../../modules/home/libre-office.nix
     ../../modules/home/thunar.nix
-    
   ];
 
   programs.home-manager.enable = true;
@@ -51,7 +51,7 @@
       pdftk
       pdfcpu
       firefox
-
+      simple-scan
       tmux
       lazygit
       lazydocker
@@ -80,7 +80,8 @@
       wget
       btop
       pdftk
-      firefox       
+      firefox
+      streamcontroller       
     ] ++ (with unstable; [
       # Add unstable packages here, e.g., neovim
     ]);

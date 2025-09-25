@@ -15,7 +15,7 @@ in
     brightnessctl
     sway-screenshot-wrapper
   ];
-
+ 
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -61,7 +61,6 @@ in
         "${modifier}+Shift+r" = "mode 'resize'";
         "${modifier}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut...' -B 'Yes, exit Sway' 'swaymsg exit'";
 
-        # --- WORKSPACE BINDINGS ARE NOW HERE ---
         "${modifier}+1" = "workspace 1";
         "${modifier}+Shift+1" = "move container to workspace 1";
         "${modifier}+2" = "workspace 2";

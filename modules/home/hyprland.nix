@@ -144,14 +144,15 @@ in
     jq
   ];
 
-  # hyprcursor = {
-  #   enable = true;
-  #   theme = "rose-pine-hyprcursor";
-  # };
+  home.pointerCursor = {
+      gtk.enable = true; # Enable GTK compatibility for cursor themes
+      package = pkgs.bibata-cursors; # Example: use bibata-cursors
+      name = "Bibata-Modern-Amber";
+      size = 22;
+    };
 
   # cursor.package = inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default;
   # cursor.name = "BreezX-RosePine-Linux";
-
   programs.waybar = {
     enable = true;
     # Tell Waybar where to find its stylesheet
@@ -384,7 +385,6 @@ in
 
       exec-once = [
         "hyprpaper -c ~/.config/hypr/hyprpaper.conf" 
-        "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet"
         "blueman-applet"
         "kdeconnect-indicator"

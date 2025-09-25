@@ -33,6 +33,7 @@ environment = {
       peazip
       nix-output-monitor
       nvd
+      direnv
     ];
   };    
 }
