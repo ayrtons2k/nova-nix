@@ -12,10 +12,11 @@
       let
         pkgs = import nixpkgs {
           inherit system;
+          config.allowUnfree = true;
         };
 
         # 1. A list of NATIVE OBS plugins. We add them individually.
-        #    You can verify each of these at search.nixos.org
+        #    You can verify each of these aft search.nixos.org
         obs_native_plugins = with pkgs.obs-studio-plugins; [
 
           # Other useful plugins from your original request:

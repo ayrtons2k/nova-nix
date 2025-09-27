@@ -1,0 +1,41 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1758690382,
+        "narHash": "sha256-NY3kSorgqE5LMm1LqNwGne3ZLMF2/ILgLpFr1fS4X3o=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e643668fd71b949c53f8626614b21ff71a07379d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nova-nix-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1758893045,
+        "narHash": "sha256-dmvipGF/A4LESyBzaGpI7kKopciPIVPYYHPI+tzk2co=",
+        "path": "/home/ayrton/nova-nix-config",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/ayrton/nova-nix-config",
+        "type": "path"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "nova-nix-config": "nova-nix-config"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
