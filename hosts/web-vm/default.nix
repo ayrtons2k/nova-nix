@@ -2,7 +2,7 @@
 { config, pkgs, flake-nixpkgs, ... }: # Or your working function signature
 {
   imports = [
-    ../../modules/nixos/common-vm.nix
+    ../common-vm
     "${flake-nixpkgs}/nixos/modules/virtualisation/qemu-vm.nix" # Or your working import
   ];
 
@@ -20,7 +20,7 @@
   # --- The rest of your configuration is perfect ---                   
   services.openssh.enable = true;
   services.nginx = {
-    enable = true;how to f 
+    enable = true;
     virtualHosts."localhost".root = pkgs.runCommand "index.html" {} ''
       mkdir -p $out
       echo "<h1>SUCCESS! The VM is running!</h1>" > $out/index.html

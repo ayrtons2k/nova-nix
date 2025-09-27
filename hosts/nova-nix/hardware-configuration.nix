@@ -13,7 +13,7 @@
   boot.kernelModules = [ "kvm-amd" "hid_apple"];
   boot.extraModulePackages = [ ];
   boot.extraModprobeConfig = ''
-    options hid_apple fnmode=2
+    options hid_apple fnmode=2 swap_opt_cmd=0 iso_layout=0
   '';  
 
   fileSystems."/" =

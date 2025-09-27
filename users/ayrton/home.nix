@@ -11,6 +11,7 @@
     ../../modules/home/zellij.nix
     ../../modules/home/libre-office.nix
     ../../modules/home/thunar.nix
+    ../../modules/home/lf.nix
   ];
 
   programs.home-manager.enable = true;
